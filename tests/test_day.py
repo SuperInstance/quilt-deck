@@ -66,7 +66,14 @@ def test_python_day_trains_the_label_bus():
 
 
 def test_backend_conformance_python_esp32():
-    """Same day -> byte-identical QUF from both engines."""
+    """Same day -> byte-identical QUF from both engines.
+
+    Reference discipline (expert nudge 2026-08-29): the ESP32 bridge egress
+    is compared against the python soft-fabric shadow -- the SAME single
+    reference the FPGA cosim uses (deck/cosim.py compares RTL egress to the
+    soft model's prediction). Byte-identity therefore chains transitively:
+    esp32 == py and RTL == py imply all three agree. No two hardware
+    codepaths are ever compared only to each other."""
     led_p, quf_p, doc_p, _ = _one_day("python", 7)
     try:
         led_e, quf_e, doc_e, res = _one_day("esp32", 7)
@@ -126,3 +133,25 @@ if __name__ == "__main__":
         fn()
         print("PASS", fn.__name__)
     print(f"{len(fns)} day tests passed")
+
+
+def test_no_bridge_drift_seam():
+    """Drift sentinel (expert nudge 2026-08-29): the esp32 bridge C must live
+    in exactly ONE place — this repo. If quilt-verilog ever sprouts its own
+    copy, this test fails and forces single-sourcing or an explicit
+    checksum gate, before silent divergence can happen."""
+    qv = os.path.expanduser("~/projects/quilt-verilog")
+    if not os.path.isdir(qv):
+        print("SKIP: quilt-verilog not present")
+        return
+    clones = []
+    for root, dirs, files in os.walk(qv):
+        dirs[:] = [d for d in dirs if d != ".git"]
+        if "deckbridge.c" in files:
+            clones.append(os.path.join(root, "deckbridge.c"))
+    here = os.path.join(os.path.dirname(__file__), "..", "esp32", "deckbridge.c")
+    assert not clones, (
+        "bridge C duplicated outside this repo: %s -- single-source it or add "
+        "a checksum gate" % clones)
+    assert os.path.exists(here), "canonical bridge C missing from quilt-deck"
+    print("drift sentinel: bridge C single-sourced in quilt-deck")
