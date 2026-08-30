@@ -1,0 +1,15 @@
+== F/V EILEEN — the books ==
+landed 2445 = totes 36 + hold 2409 + unbooked 0 — BALANCED
+species    landed    totes     hold efficiency
+pink         1764       12     1752       0.7%
+chum          550       12      538       2.2%
+king           34        0       34       0.0%
+coho           97       12       85      12.4%
+moves: 15 booked
+refusals:
+  [DOUBLE_MOVE] identical move booked this tick (TOTE-STBD-A->HOLD 31 coho)
+  [TOTE_OVERFLOW] TOTE-STBD-F holds 0/120; landing of 200 king refused
+  [PHANTOM_HOLD_ENTRY] 50 pink appeared in HOLD with no tote debit — refused
+set 1: 18 hooks × 1.5 fm = 27.0 fm
+set 2: 27 hooks × 1.5 fm = 40.5 fm
+set 3: 29 hooks × 1.5 fm = 43.5 fm

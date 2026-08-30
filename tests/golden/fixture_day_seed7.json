@@ -1,0 +1,2253 @@
+{
+ "books": {
+  "conservation": {
+   "balanced": true,
+   "hold_total": 2409,
+   "landed_total": 2445,
+   "totes_total": 36,
+   "unbooked": 0
+  },
+  "fires": [
+   {
+    "cell": "TOTE-PORT",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "HOLD",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-PORT",
+    "dat": 30752,
+    "tick": null
+   },
+   {
+    "cell": "HOLD",
+    "dat": 29791,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-PORT",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-HOLD",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-PORT",
+    "dat": 28861,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-STBD-A",
+    "dat": 10064,
+    "tick": null
+   },
+   {
+    "cell": "ALIAS",
+    "dat": 3469,
+    "tick": null
+   },
+   {
+    "cell": "XID-MATCH",
+    "dat": 1091,
+    "tick": null
+   },
+   {
+    "cell": "CAM-UW",
+    "dat": 96,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-HOLD",
+    "dat": 28929,
+    "tick": null
+   },
+   {
+    "cell": "HOLD",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "HOLD",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "HOOK-COUNT",
+    "dat": 500,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-PORT",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-PORT",
+    "dat": 31744,
+    "tick": null
+   },
+   {
+    "cell": "HOLD",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "ALIAS",
+    "dat": 3248,
+    "tick": null
+   },
+   {
+    "cell": "XID-MATCH",
+    "dat": 1318,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-PORT",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "HOLD",
+    "dat": 30752,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-HOLD",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "XID-MATCH",
+    "dat": 1383,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-STBD-A",
+    "dat": 17800,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-HOLD",
+    "dat": 29791,
+    "tick": null
+   },
+   {
+    "cell": "XID-MATCH",
+    "dat": 1084,
+    "tick": null
+   },
+   {
+    "cell": "CAM-UW",
+    "dat": 448,
+    "tick": null
+   },
+   {
+    "cell": "HOLD",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "HOLD",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "HOOK-COUNT",
+    "dat": 464,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-PORT",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "HOLD",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-PORT",
+    "dat": 30752,
+    "tick": null
+   },
+   {
+    "cell": "ALIAS",
+    "dat": 3813,
+    "tick": null
+   },
+   {
+    "cell": "XID-MATCH",
+    "dat": 2075,
+    "tick": null
+   },
+   {
+    "cell": "HOLD",
+    "dat": 30752,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-PORT",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "XID-MATCH",
+    "dat": 1535,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-HOLD",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "ALIAS",
+    "dat": 3263,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-STBD-A",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "XID-MATCH",
+    "dat": 1784,
+    "tick": null
+   },
+   {
+    "cell": "TOTE-HOLD",
+    "dat": 29888,
+    "tick": null
+   },
+   {
+    "cell": "CAM-UW",
+    "dat": 560,
+    "tick": null
+   },
+   {
+    "cell": "XID-MATCH",
+    "dat": 1133,
+    "tick": null
+   },
+   {
+    "cell": "HOLD",
+    "dat": 32767,
+    "tick": null
+   },
+   {
+    "cell": "HOLD",
+    "dat": 32767,
+    "tick": null
+   }
+  ],
+  "hold": {
+   "chum": 538,
+   "coho": 85,
+   "king": 34,
+   "pink": 1752
+  },
+  "hook_sets": [
+   {
+    "depth_fm": 27.0,
+    "hooks_visible": 18,
+    "set": 1
+   },
+   {
+    "depth_fm": 40.5,
+    "hooks_visible": 27,
+    "set": 2
+   },
+   {
+    "depth_fm": 43.5,
+    "hooks_visible": 29,
+    "set": 3
+   }
+  ],
+  "landed": {
+   "chum": 550,
+   "coho": 97,
+   "king": 34,
+   "pink": 1764
+  },
+  "moves": [
+   {
+    "dst": "HOLD",
+    "id": "mid-brail-1-0",
+    "n": 295,
+    "sp": "pink",
+    "src": "TOTE-PORT",
+    "t": 8
+   },
+   {
+    "dst": "HOLD",
+    "id": "set-brail-1-0",
+    "n": 338,
+    "sp": "pink",
+    "src": "TOTE-PORT",
+    "t": 47
+   },
+   {
+    "dst": "HOLD",
+    "id": "set-brail-1-1",
+    "n": 146,
+    "sp": "chum",
+    "src": "TOTE-HOLD",
+    "t": 51
+   },
+   {
+    "dst": "HOLD",
+    "id": "set-brail-1-2",
+    "n": 18,
+    "sp": "king",
+    "src": "TOTE-STBD-F",
+    "t": 53
+   },
+   {
+    "dst": "HOLD",
+    "id": "set-brail-1-3",
+    "n": 22,
+    "sp": "coho",
+    "src": "TOTE-STBD-A",
+    "t": 54
+   },
+   {
+    "dst": "HOLD",
+    "id": "mid-brail-2-0",
+    "n": 379,
+    "sp": "pink",
+    "src": "TOTE-PORT",
+    "t": 61
+   },
+   {
+    "dst": "HOLD",
+    "id": "set-brail-2-0",
+    "n": 164,
+    "sp": "pink",
+    "src": "TOTE-PORT",
+    "t": 101
+   },
+   {
+    "dst": "HOLD",
+    "id": "set-brail-2-1",
+    "n": 177,
+    "sp": "chum",
+    "src": "TOTE-HOLD",
+    "t": 103
+   },
+   {
+    "dst": "HOLD",
+    "id": "set-brail-2-2",
+    "n": 7,
+    "sp": "king",
+    "src": "TOTE-STBD-F",
+    "t": 105
+   },
+   {
+    "dst": "HOLD",
+    "id": "set-brail-2-3",
+    "n": 32,
+    "sp": "coho",
+    "src": "TOTE-STBD-A",
+    "t": 106
+   },
+   {
+    "dst": "HOLD",
+    "id": "mid-brail-3-0",
+    "n": 322,
+    "sp": "pink",
+    "src": "TOTE-PORT",
+    "t": 112
+   },
+   {
+    "dst": "HOLD",
+    "id": "set-brail-3-0",
+    "n": 254,
+    "sp": "pink",
+    "src": "TOTE-PORT",
+    "t": 155
+   },
+   {
+    "dst": "HOLD",
+    "id": "set-brail-3-1",
+    "n": 215,
+    "sp": "chum",
+    "src": "TOTE-HOLD",
+    "t": 158
+   },
+   {
+    "dst": "HOLD",
+    "id": "set-brail-3-2",
+    "n": 9,
+    "sp": "king",
+    "src": "TOTE-STBD-F",
+    "t": 161
+   },
+   {
+    "dst": "HOLD",
+    "id": "set-brail-3-3",
+    "n": 31,
+    "sp": "coho",
+    "src": "TOTE-STBD-A",
+    "t": 162
+   }
+  ],
+  "refusals": [
+   {
+    "detail": "identical move booked this tick (TOTE-STBD-A->HOLD 31 coho)",
+    "op": "move",
+    "reason": "DOUBLE_MOVE",
+    "t": 163
+   },
+   {
+    "detail": "TOTE-STBD-F holds 0/120; landing of 200 king refused",
+    "op": "land",
+    "reason": "TOTE_OVERFLOW",
+    "t": 163
+   },
+   {
+    "detail": "50 pink appeared in HOLD with no tote debit \u2014 refused",
+    "op": "hold-credit",
+    "reason": "PHANTOM_HOLD_ENTRY",
+    "t": 163
+   }
+  ],
+  "totes": {
+   "TOTE-HOLD": {
+    "cap": 400,
+    "n": 12,
+    "sp": "chum"
+   },
+   "TOTE-PORT": {
+    "cap": 400,
+    "n": 12,
+    "sp": "pink"
+   },
+   "TOTE-STBD-A": {
+    "cap": 120,
+    "n": 12,
+    "sp": "coho"
+   }
+  }
+ },
+ "cells": [
+  {
+   "act": 60,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    6144,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    2,
+    0,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      255,
+      255,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOST",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      2,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "ALIAS",
+     "slot": 1,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      1,
+      5,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "XID-MATCH",
+     "slot": 2,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "LEDGER-SCALE",
+     "slot": 3,
+     "wh": 0
+    }
+   ],
+   "id": 0,
+   "name": "TOTE-PORT",
+   "refr": 0
+  },
+  {
+   "act": 31,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    6144,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    2,
+    0,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      255,
+      158,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOST",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      2,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "ALIAS",
+     "slot": 1,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      1,
+      5,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "XID-MATCH",
+     "slot": 2,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "LEDGER-SCALE",
+     "slot": 3,
+     "wh": 0
+    }
+   ],
+   "id": 1,
+   "name": "TOTE-HOLD",
+   "refr": 0
+  },
+  {
+   "act": 620,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    4096,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    2,
+    0,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      16,
+      18,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOST",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      2,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "ALIAS",
+     "slot": 1,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      1,
+      5,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "XID-MATCH",
+     "slot": 2,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "LEDGER-SCALE",
+     "slot": 3,
+     "wh": 0
+    }
+   ],
+   "id": 2,
+   "name": "TOTE-STBD-F",
+   "refr": 0
+  },
+  {
+   "act": 37,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    4096,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    2,
+    0,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      63,
+      34,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOST",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      2,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "ALIAS",
+     "slot": 1,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      1,
+      5,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "XID-MATCH",
+     "slot": 2,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "LEDGER-SCALE",
+     "slot": 3,
+     "wh": 0
+    }
+   ],
+   "id": 3,
+   "name": "TOTE-STBD-A",
+   "refr": 0
+  },
+  {
+   "act": 11162,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    24576,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    2,
+    0,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      254,
+      255,
+      255,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-PORT",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      215,
+      177,
+      146,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-HOLD",
+     "slot": 1,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      9,
+      7,
+      18,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-STBD-F",
+     "slot": 2,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      31,
+      32,
+      22,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-STBD-A",
+     "slot": 3,
+     "wh": 0
+    }
+   ],
+   "id": 4,
+   "name": "HOLD",
+   "refr": 0
+  },
+  {
+   "act": 373,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    3072,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    2,
+    0,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      4,
+      6,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-PORT",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      4,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-HOLD",
+     "slot": 1,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-STBD-F",
+     "slot": 2,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      2,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-STBD-A",
+     "slot": 3,
+     "wh": 0
+    }
+   ],
+   "id": 5,
+   "name": "ALIAS",
+   "refr": 0
+  },
+  {
+   "act": 0,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    1024,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    6,
+    256,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      4,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-PORT",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      4,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-HOLD",
+     "slot": 1,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-STBD-F",
+     "slot": 2,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-STBD-A",
+     "slot": 3,
+     "wh": 0
+    }
+   ],
+   "id": 6,
+   "name": "XID-MATCH",
+   "refr": 0
+  },
+  {
+   "act": 0,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    384,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    2,
+    150,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOST",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "SOUNDER",
+     "slot": 1,
+     "wh": 0
+    }
+   ],
+   "id": 7,
+   "name": "HOOK-COUNT",
+   "refr": 0
+  },
+  {
+   "act": 16,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    4096,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    2,
+    0,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOOK-COUNT",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOST",
+     "slot": 1,
+     "wh": 0
+    }
+   ],
+   "id": 8,
+   "name": "SOUNDER",
+   "refr": 0
+  },
+  {
+   "act": 1258,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    8192,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    2,
+    0,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      6,
+      5,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOST",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      4,
+      6,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-PORT",
+     "slot": 1,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      4,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-HOLD",
+     "slot": 2,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "TOTE-STBD-F",
+     "slot": 3,
+     "wh": 0
+    }
+   ],
+   "id": 9,
+   "name": "LEDGER-SCALE",
+   "refr": 0
+  },
+  {
+   "act": 0,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    24576,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    2,
+    0,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOST",
+     "slot": 0,
+     "wh": 0
+    }
+   ],
+   "id": 10,
+   "name": "BESTSHOT",
+   "refr": 0
+  },
+  {
+   "act": 88,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    24576,
+    4,
+    11469,
+    20,
+    0,
+    15,
+    2,
+    0,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "BESTSHOT",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      3,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOST",
+     "slot": 1,
+     "wh": 0
+    }
+   ],
+   "id": 11,
+   "name": "AUDIT-CAPTAIN",
+   "refr": 0
+  },
+  {
+   "act": 0,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    24576,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    2,
+    0,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "AUDIT-CAPTAIN",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOST",
+     "slot": 1,
+     "wh": 0
+    }
+   ],
+   "id": 12,
+   "name": "NIGHT-CRON",
+   "refr": 0
+  },
+  {
+   "act": 0,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    24576,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    2,
+    0,
+    0,
+    64,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "NIGHT-CRON",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "SOUNDER",
+     "slot": 1,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOST",
+     "slot": 2,
+     "wh": 0
+    }
+   ],
+   "id": 13,
+   "name": "AB-PROMOTE",
+   "refr": 0
+  },
+  {
+   "act": 0,
+   "dials": [
+    2048,
+    128,
+    6,
+    12,
+    5,
+    96,
+    4,
+    11469,
+    20,
+    0,
+    64,
+    5,
+    128,
+    0,
+    8,
+    8
+   ],
+   "edges": [
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      12,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "XID-MATCH",
+     "slot": 0,
+     "wh": 0
+    },
+    {
+     "age": 0,
+     "base": 256,
+     "buckets": [
+      0,
+      0,
+      0,
+      12,
+      0,
+      0,
+      0,
+      0
+     ],
+     "peer": "HOST",
+     "slot": 1,
+     "wh": 0
+    }
+   ],
+   "id": 14,
+   "name": "CAM-UW",
+   "refr": 0
+  }
+ ],
+ "day": {
+  "backend": "python",
+  "date": "2026-08-29",
+  "seed": 7,
+  "sets": 3
+ },
+ "daylog": [
+  {
+   "fish": [
+    {
+     "n": 645,
+     "sp": "pink"
+    },
+    {
+     "n": 158,
+     "sp": "chum"
+    },
+    {
+     "n": 18,
+     "sp": "king"
+    },
+    {
+     "n": 34,
+     "sp": "coho"
+    }
+   ],
+   "set": 1,
+   "t": "set"
+  },
+  {
+   "set": 1,
+   "t": "hooks",
+   "visible": 18
+  },
+  {
+   "n": 64,
+   "set": 1,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 94,
+   "set": 1,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 66,
+   "set": 1,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 83,
+   "set": 1,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "from": "TOTE-PORT",
+   "id": "mid-brail-1-0",
+   "n": 295,
+   "sp": "pink",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "n": 63,
+   "set": 1,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 92,
+   "set": 1,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 73,
+   "set": 1,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 62,
+   "set": 1,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 48,
+   "set": 1,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 87,
+   "set": 1,
+   "sp": "chum",
+   "t": "land",
+   "tote": "TOTE-HOLD"
+  },
+  {
+   "n": 71,
+   "set": 1,
+   "sp": "chum",
+   "t": "land",
+   "tote": "TOTE-HOLD"
+  },
+  {
+   "n": 18,
+   "set": 1,
+   "sp": "king",
+   "t": "land",
+   "tote": "TOTE-STBD-F"
+  },
+  {
+   "n": 34,
+   "set": 1,
+   "sp": "coho",
+   "t": "land",
+   "tote": "TOTE-STBD-A"
+  },
+  {
+   "set": 1,
+   "sightings": 3,
+   "t": "uw"
+  },
+  {
+   "frames": 5,
+   "set": 1,
+   "t": "scale"
+  },
+  {
+   "n": 25,
+   "t": "ticks"
+  },
+  {
+   "from": "TOTE-PORT",
+   "id": "set-brail-1-0",
+   "n": 338,
+   "sp": "pink",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "from": "TOTE-HOLD",
+   "id": "set-brail-1-1",
+   "n": 146,
+   "sp": "chum",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "from": "TOTE-STBD-F",
+   "id": "set-brail-1-2",
+   "n": 18,
+   "sp": "king",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "from": "TOTE-STBD-A",
+   "id": "set-brail-1-3",
+   "n": 22,
+   "sp": "coho",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "fish": [
+    {
+     "n": 543,
+     "sp": "pink"
+    },
+    {
+     "n": 177,
+     "sp": "chum"
+    },
+    {
+     "n": 7,
+     "sp": "king"
+    },
+    {
+     "n": 32,
+     "sp": "coho"
+    }
+   ],
+   "set": 2,
+   "t": "set"
+  },
+  {
+   "set": 2,
+   "t": "hooks",
+   "visible": 27
+  },
+  {
+   "n": 85,
+   "set": 2,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 63,
+   "set": 2,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 74,
+   "set": 2,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 62,
+   "set": 2,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 95,
+   "set": 2,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "from": "TOTE-PORT",
+   "id": "mid-brail-2-0",
+   "n": 379,
+   "sp": "pink",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "n": 78,
+   "set": 2,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 86,
+   "set": 2,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 69,
+   "set": 2,
+   "sp": "chum",
+   "t": "land",
+   "tote": "TOTE-HOLD"
+  },
+  {
+   "n": 94,
+   "set": 2,
+   "sp": "chum",
+   "t": "land",
+   "tote": "TOTE-HOLD"
+  },
+  {
+   "n": 14,
+   "set": 2,
+   "sp": "chum",
+   "t": "land",
+   "tote": "TOTE-HOLD"
+  },
+  {
+   "n": 7,
+   "set": 2,
+   "sp": "king",
+   "t": "land",
+   "tote": "TOTE-STBD-F"
+  },
+  {
+   "n": 32,
+   "set": 2,
+   "sp": "coho",
+   "t": "land",
+   "tote": "TOTE-STBD-A"
+  },
+  {
+   "set": 2,
+   "sightings": 7,
+   "t": "uw"
+  },
+  {
+   "frames": 3,
+   "set": 2,
+   "t": "scale"
+  },
+  {
+   "n": 27,
+   "t": "ticks"
+  },
+  {
+   "from": "TOTE-PORT",
+   "id": "set-brail-2-0",
+   "n": 164,
+   "sp": "pink",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "from": "TOTE-HOLD",
+   "id": "set-brail-2-1",
+   "n": 177,
+   "sp": "chum",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "from": "TOTE-STBD-F",
+   "id": "set-brail-2-2",
+   "n": 7,
+   "sp": "king",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "from": "TOTE-STBD-A",
+   "id": "set-brail-2-3",
+   "n": 32,
+   "sp": "coho",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "fish": [
+    {
+     "n": 576,
+     "sp": "pink"
+    },
+    {
+     "n": 215,
+     "sp": "chum"
+    },
+    {
+     "n": 9,
+     "sp": "king"
+    },
+    {
+     "n": 31,
+     "sp": "coho"
+    }
+   ],
+   "set": 3,
+   "t": "set"
+  },
+  {
+   "set": 3,
+   "t": "hooks",
+   "visible": 29
+  },
+  {
+   "n": 64,
+   "set": 3,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 96,
+   "set": 3,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 63,
+   "set": 3,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 99,
+   "set": 3,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "from": "TOTE-PORT",
+   "id": "mid-brail-3-0",
+   "n": 322,
+   "sp": "pink",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "n": 91,
+   "set": 3,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 94,
+   "set": 3,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 69,
+   "set": 3,
+   "sp": "pink",
+   "t": "land",
+   "tote": "TOTE-PORT"
+  },
+  {
+   "n": 80,
+   "set": 3,
+   "sp": "chum",
+   "t": "land",
+   "tote": "TOTE-HOLD"
+  },
+  {
+   "n": 89,
+   "set": 3,
+   "sp": "chum",
+   "t": "land",
+   "tote": "TOTE-HOLD"
+  },
+  {
+   "n": 46,
+   "set": 3,
+   "sp": "chum",
+   "t": "land",
+   "tote": "TOTE-HOLD"
+  },
+  {
+   "n": 9,
+   "set": 3,
+   "sp": "king",
+   "t": "land",
+   "tote": "TOTE-STBD-F"
+  },
+  {
+   "n": 31,
+   "set": 3,
+   "sp": "coho",
+   "t": "land",
+   "tote": "TOTE-STBD-A"
+  },
+  {
+   "set": 3,
+   "sightings": 5,
+   "t": "uw"
+  },
+  {
+   "frames": 3,
+   "set": 3,
+   "t": "scale"
+  },
+  {
+   "n": 29,
+   "t": "ticks"
+  },
+  {
+   "from": "TOTE-PORT",
+   "id": "set-brail-3-0",
+   "n": 254,
+   "sp": "pink",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "from": "TOTE-HOLD",
+   "id": "set-brail-3-1",
+   "n": 215,
+   "sp": "chum",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "from": "TOTE-STBD-F",
+   "id": "set-brail-3-2",
+   "n": 9,
+   "sp": "king",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "from": "TOTE-STBD-A",
+   "id": "set-brail-3-3",
+   "n": 31,
+   "sp": "coho",
+   "t": "move",
+   "to": "HOLD"
+  },
+  {
+   "op": "double-move",
+   "t": "refuse"
+  },
+  {
+   "n": 200,
+   "op": "overflow",
+   "sp": "king",
+   "t": "refuse",
+   "tote": "TOTE-STBD-F"
+  },
+  {
+   "n": 50,
+   "op": "phantom",
+   "sp": "pink",
+   "t": "refuse"
+  },
+  {
+   "ab": {
+    "margin": 64,
+    "promote": false
+   },
+   "audit": [
+    {
+     "fish": 1,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 2,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 3,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 4,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 5,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 6,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 7,
+     "verdict": "quarantine"
+    },
+    {
+     "fish": 8,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 9,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 10,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 11,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 12,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 13,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 14,
+     "verdict": "quarantine"
+    },
+    {
+     "fish": 15,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 16,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 17,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 18,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 19,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 20,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 21,
+     "verdict": "quarantine"
+    },
+    {
+     "fish": 22,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 23,
+     "verdict": "confirm"
+    },
+    {
+     "fish": 24,
+     "verdict": "confirm"
+    }
+   ],
+   "t": "night"
+  },
+  {
+   "n": 16,
+   "t": "ticks"
+  }
+ ],
+ "quf_bytes": 1888,
+ "quf_sha256": "3e9366ab3d99cbe12d90c0581f26833ae7e0e58a22eb57048666e7e0bcedd982"
+}

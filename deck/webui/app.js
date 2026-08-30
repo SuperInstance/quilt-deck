@@ -425,6 +425,18 @@ function bindPicker() {
   }
 }
 
+function tryLoadLatest() {
+  // Look for latest day export in current directory
+  return fetch("latest.json", { cache: "no-store" })
+    .then(function (r) {
+      if (r.ok) return r.json();
+      return null;
+    })
+    .catch(function () {
+      return null;
+    });
+}
+
 function boot() {
   bindPicker();
   if (location.protocol === "file:") {
@@ -432,14 +444,24 @@ function boot() {
     showPicker("opened from disk — fetch is blocked, so load the day JSON:");
     return;
   }
-  fetch("day.json", { cache: "no-store" })
-    .then(function (r) {
-      if (!r.ok) throw new Error("HTTP " + r.status);
-      return r.json();
-    })
-    .then(renderAll)
-    .catch(function () {
-      showPicker("day.json not fetchable — pick the day export from disk:");
+  
+  // Try loading latest.json first, then fall back to day.json
+  tryLoadLatest()
+    .then(function (latest) {
+      if (latest) {
+        renderAll(latest);
+        console.log("loaded latest day export");
+      } else {
+        fetch("day.json", { cache: "no-store" })
+          .then(function (r) {
+            if (!r.ok) throw new Error("HTTP " + r.status);
+            return r.json();
+          })
+          .then(renderAll)
+          .catch(function () {
+            showPicker("day.json not fetchable — pick the day export from disk:");
+          });
+      }
     });
 }
 

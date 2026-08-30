@@ -6,7 +6,7 @@
   python3 -m deck books DAY.json              the balance ledger of the day
   python3 -m deck verify DAY.quf              structural + conservation check
   python3 -m deck warm DAY.quf --ops more.json [--out day2.quf]
-  python3 -m deck console [--port 8717]       serve the static web console
+  python3 -m deck latest               create symlink to latest day export
 """
 
 from __future__ import annotations
@@ -143,6 +143,46 @@ def cmd_console(args):
         httpd.serve_forever()
     return 0
 
+def cmd_latest(args):
+    """Create/update latest.json symlink to most recent day export."""
+    from pathlib import Path
+    import time
+    
+    if args.day:
+        target = Path(args.day)
+        if not target.exists():
+            print(f"ERROR: {args.day} does not exist")
+            return 1
+        if not (target.name.startswith("day-") and target.name.endswith(".json")):
+            print(f"ERROR: {args.day} does not look like a day export")
+            return 1
+    else:
+        # Look for day-*.json files
+        day_files = list(Path.cwd().glob("day-*.json"))
+        if not day_files:
+            print("ERROR: no day-*.json files found in current directory")
+            return 1
+        # Sort by modification time, newest first
+        day_files.sort(key=lambda f: f.stat().st_mtime, reverse=True)
+        target = day_files[0]
+    
+    # Create/update the symlink
+    latest_json = Path("latest.json")
+    try:
+        if latest_json.exists():
+            if latest_json.is_symlink():
+                latest_json.unlink()
+            else:
+                print("ERROR: latest.json exists and is not a symlink")
+                return 1
+        latest_json.symlink_to(target)
+        mtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(target.stat().st_mtime))
+        print(f"latest.json -> {target.name} (modified {mtime})")
+        return 0
+    except Exception as e:
+        print(f"ERROR: failed to create symlink: {e}")
+        return 1
+
 
 def main(argv=None):
     p = argparse.ArgumentParser(prog="deck")
@@ -176,10 +216,13 @@ def main(argv=None):
     s = sub.add_parser("console")
     s.add_argument("--port", type=int, default=8717)
 
+    s = sub.add_parser("latest")
+    s.add_argument("--day", default=None)
+
     args = p.parse_args(argv)
     return {"new": cmd_new, "day": cmd_day, "books": cmd_books,
             "verify": cmd_verify, "warm": cmd_warm,
-            "console": cmd_console}[args.cmd](args)
+            "console": cmd_console, "latest": cmd_latest}[args.cmd](args)
 
 
 if __name__ == "__main__":
