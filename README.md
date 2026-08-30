@@ -2,7 +2,8 @@
 
 The F/V EILEEN back deck (docs/BACK-DECK-APP.md in quilt-verilog) as a real
 application on the quilt backend: deck positions are cells, fish moves are
-effects in balanced transactions, conservation is a runtime check, the whole
+effects in balanced transactions, conservation is a runtime check of one
+plain invariant, the whole
 deck state travels in one QUF.
 
 Three backends, one semantics:
@@ -39,6 +40,17 @@ What a day produces and where to look:
 - stdout — a summary line (landed / balance), the QUF size + sha256 prefix,
   and every adversarial op REFUSED with its booked reason. Expect ~3
   refusals on seed 7 — those are the conservation guard working.
+
+  The invariant the guard enforces, in one sentence: **every pound credited
+  by an accepted move sits in exactly one custody cell (a tote or the
+  hold) — `landed == totes + hold` at every commit; nothing is minted,
+  nothing vanishes, and a refused move moves nothing.** This is the app
+  face of the fabric's ledger identity A1/T1 (`emit = pipe + acc`;
+  `emit + ext = book + pipe + (acc − book) + ext`, constant across
+  commits). The canonical machine-checked wording is the BMC-55 statement
+  in quilt-verilog's `docs/FORMAL-PROOFS.md` (commit b82cd19) — cite that
+  document, not a paraphrase, until the L1/L2 strengthening lemmas close
+  `mode prove`.
 
 Also on the operator surface: `python3 -m deck day --summary` prints a
 one-line summary; `python3 -m deck latest` symlinks `latest.json` to the
