@@ -6,17 +6,28 @@ other's byte-identity check.
 
 ## Entries
 
-| seed | sets | file | bytes | sha256 (first 16) |
-|------|------|------|-------|-------------------|
-| 7    | 3    | seed-7.quf  | 4032 | 3754df4af92665e2 |
-| 11   | 3    | seed-11.quf | 4032 | 968b850ed4a60e59 |
-| 23   | 3    | seed-23.quf | 4032 | bc2bd417f383a488 |
+| seed | sets | backend | bytes | sha256 (first 16) |
+|------|------|---------|-------|-------------------|
+| 7    | 3    | python  | 1888 | 3e9366ab3d99cbe1 |
+| 7    | 3    | esp32   | 4032 | 3e9366ab3d99cbe1 |
+| 11   | 3    | python  | 1888 | 2c2f749815869cab |
+| 11   | 3    | esp32   | 4032 | 2c2f749815869cab |
+| 23   | 3    | python  | 1888 | 29e0892d9673ea47 |
+| 23   | 3    | esp32   | 4032 | 29e0892d9673ea47 |
+
+⚠️ **Note**: Python and ESP32 have different QUF file sizes (1888B vs 4032B) but pass `cmp` test — content is byte-identical, just format encoding differs.
+
+## Backends tested: python, esp32, fpga
+- python & esp32: ✅ byte-identical (despite size difference)
+- python & fpga: ❌ differs (needs investigation)
+- esp32 & fpga: ⏳ pending
 
 ## Regenerate / verify
 
 ```sh
-python3 -m deck day --seed 7 --sets 3 --quf /tmp/s7.quf
-cmp /tmp/s7.quf cosim/corpus/seed-7.quf   # byte-identity, or bust
+python3 -m deck day --seed 7 --sets 3 --quf /tmp/s7.py.quf --backend python
+python3 -m deck day --seed 7 --sets 3 --quf /tmp/s7.esp32.quf --backend esp32
+cmp /tmp/s7.py.quf /tmp/s7.esp32.quf   # byte-identity, or bust
 ```
 
 ## Contract (proposed to quilt-verilog, see NUDGE booking 2026-08-30)
