@@ -33,7 +33,8 @@ ESP32_BIN = os.path.join(ROOT, "esp32", "build", "deckbridge")
 
 
 def day_export(fab: Fabric, led: DeckLedger, backend: str, day: dict,
-               quf_bytes: bytes, extra: Optional[dict] = None) -> dict:
+               quf_bytes: bytes, extra: Optional[dict] = None,
+               daylog: Optional[List[dict]] = None) -> dict:
     snap = fab.snapshot()
     cells = []
     for c in snap["cells"]:
@@ -56,7 +57,7 @@ def day_export(fab: Fabric, led: DeckLedger, backend: str, day: dict,
         "quf_bytes": len(quf_bytes),
         "cells": cells,
         "books": books,
-        "daylog": [],
+        "daylog": daylog or [],
     }
     if extra:
         export.update(extra)
@@ -72,7 +73,8 @@ def run_python(log: List[dict], day: dict, warm_dials=None):
     doc = quf_doc(fab)
     from . import qufio
     quf_bytes = qufio.quf.build(doc)
-    return fab, led, doc, quf_bytes
+    archive = qufio.build_archive(doc, led.books.snapshot())
+    return fab, led, doc, quf_bytes, archive
 
 
 # ---------------------------------------------------------------- esp32 --
@@ -232,17 +234,21 @@ def run_day(log: List[dict], backend: str = "python", day: Optional[dict] = None
     """Run one day on one backend; returns the export dict."""
     day = day or {"date": "2026-08-29", "seed": 0, "sets": 5}
     if backend == "python":
-        fab, led, doc, quf_bytes = run_python(log, day)
-        export = day_export(fab, led, backend, day, quf_bytes)
+        fab, led, doc, quf_bytes, archive = run_python(log, day)
+        export = day_export(fab, led, backend, day, quf_bytes, daylog=log)
     elif backend == "esp32":
         res = run_esp32(log, day)
         export = day_export(res["fab"], res["led"], backend, day, res["quf_bytes"],
                             extra={"esp32": {k: v for k, v in res.items()
-                                             if k not in ("fab", "led", "doc", "quf_bytes")}})
+                                             if k not in ("fab", "led", "doc", "quf_bytes")}},
+                            daylog=log)
+        from . import qufio as _q
+        archive = _q.build_archive(res["doc"], res["led"].books.snapshot())
     else:
         raise ValueError("backend %r unknown (python|esp32)" % backend)
-    export["_quf_bytes"] = quf_bytes if backend == "python" else res["quf_bytes"]
     if out_quf:
+        # the day's QUF is the ARCHIVE (v1 sections + app.deck books) --
+        # state-is-a-file all the way up
         with open(out_quf, "wb") as fh:
-            fh.write(export["_quf_bytes"])
+            fh.write(archive)
     return export
