@@ -36,12 +36,47 @@ a payload hash. All rows now carry whole-file hashes exclusively.
 
 ## FPGA status: NOT VERIFIED LOCALLY (not "differs")
 
-`--backend fpga` does not complete in this environment within a worker
-tick (cosim compile hangs; no output file produced). An earlier note
+`--backend fpga` does not complete in this environment: vvp runs
+CPU-bound and is killed at its in-code 1200s timeout with zero egress
+produced (measured 2026-08-30, seed 7 sets 3). An earlier note
 here claimed "python & fpga: differs" — that was WRONG: the comparison
 ran against a nonexistent/stale file. There is no evidence of
 divergence, only absence of evidence. The treaty treats fpga as an
 UNVERIFIED lane, not a broken one.
+
+### Discriminator (TEACHER sets-bisect, 2026-08-30): zero-egress class
+
+The two-hypotheses-in-one-status problem ("pathological input vs slow
+compute") was bisected: seed 7 at **sets=1** (smallest legal scaling)
+also produced **zero egress** in 360s of full CPU. Combined with
+sets=3 producing zero egress in 1200s, the failure is
+**input-independent within measured budgets** — the TB emits nothing
+for any tried input, which is a pathological class, not a measured
+scaling shape. (One historical run appears to have flushed cold egress
+at ~3 min; never reproduced under controlled observation — treated as
+environmental interference, not evidence.) Caveat: the settle budget
+per segment (`_settle_for`, up to 24000 cycles) scales with op count,
+so a worst-case idle-spin in the TB would also look input-independent;
+the bisect rules out "merely 3× slow", not "TB-internal loop".
+
+### Cause ownership (who owns the wound)
+
+- STATUS is tracked here (this section). CAUSE is owned by
+  **eco-quiltverilog** (the TB `cosim/tb_deck_cosim.v` fork and
+  `rtl/q_serfabric_top.v` live there; a TB-internal idle loop or settle
+  mis-scale is its codepath), with **eco-quiltdeck** owning the harness
+  side (`deck/cosim.py`, ScriptBuilder op framing). Investigation is
+  OPEN — first probe for the owner: dump `$time` progress from the TB
+  to distinguish busy-sim from idle-spin.
+
+### Plan of record for this lane
+
+Scout filing
+`ecosystem/scout/2026-08-30-renode-verilator-cosim-deterministic-fpga-lane.md`
+(in the OpenClaw workspace): Renode + Verilator co-simulation — a
+deterministic, headless, CI-runnable FPGA lane that escapes the
+iverilog-hang class entirely. Until that lands, the byte-identity
+treaty rests on the python and esp32 lanes only.
 
 ## Verification recipe
 
