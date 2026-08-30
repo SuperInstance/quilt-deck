@@ -25,8 +25,8 @@ def _one_day(backend: str, seed: int):
     log = gen_day(seed=seed)
     day = {"date": "2026-08-29", "seed": seed, "sets": 5, "backend": backend}
     if backend == "python":
-        fab, led, doc, quf = run_python(log, day)
-        return led, quf, doc, {}
+        fab, led, doc, quf, archive = run_python(log, day)
+        return led, archive, doc, {"archive": archive, "core": quf}
     elif backend == "esp32":
         from deck.backends import run_esp32
         res = run_esp32(log, day)
@@ -80,6 +80,13 @@ def test_backend_conformance_python_esp32():
     assert res["fires_match"], "fire streams diverged"
     # books agree exactly (conservation is backend-independent)
     assert led_p.books.snapshot() == led_e.books.snapshot()
+    # the final QUF is the ARCHIVE flavor: five sections incl. app.deck
+    from deck.qufio import split_archive
+    _, app_p = split_archive(quf_p)
+    _, app_e = split_archive(quf_e)
+    assert set(app_p) == set(app_e) == {
+        "conservation", "hold", "hook_sets", "landed", "moves",
+        "refusals", "totes"}, "app.deck section missing or wrong"
     print("conformance: python == esp32 byte-identical (%d B QUF)" % len(quf_p))
 
 
