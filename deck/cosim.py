@@ -230,6 +230,9 @@ def run(seed: int = 42, sets: int = 5, keep: bool = True,
     qufio.write_hex(boot, os.path.join(RUN, "boot.hex"))
 
     # compile + run the TB
+    if verbose:
+        print("fpga: compiling RTL + simulating (CPU-bound; capped at "
+              "20 min — see cosim/corpus/MANIFEST.md for lane status)")
     vvp = os.path.join(RUN, "tb.vvp")
     rtl = sorted(os.path.join(QV, "rtl", f) for f in os.listdir(os.path.join(QV, "rtl"))
                  if f.endswith(".v"))
@@ -237,8 +240,16 @@ def run(seed: int = 42, sets: int = 5, keep: bool = True,
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode != 0:
         return False, ["iverilog failed:\n" + r.stdout + r.stderr]
-    r = subprocess.run(["vvp", vvp], cwd=COSIM, capture_output=True, text=True,
-                       timeout=1200)
+    try:
+        r = subprocess.run(["vvp", vvp], cwd=COSIM, capture_output=True,
+                           text=True, timeout=1200)
+    except subprocess.TimeoutExpired:
+        return False, [
+            "vvp TIMED OUT after 1200s: the cosim did not reach COSIM DONE "
+            "(measured 2026-08-30, seed 7 sets 3: 20 min at 100% CPU, no "
+            "egress produced). The fpga lane is EXPERIMENTAL and currently "
+            "UNVERIFIED — tracked in cosim/corpus/MANIFEST.md. The python "
+            "and esp32 lanes carry the byte-identity treaty."]
     if verbose:
         print(r.stdout[-2000:])
     if "COSIM DONE" not in r.stdout:

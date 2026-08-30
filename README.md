@@ -6,13 +6,17 @@ effects in balanced transactions, conservation is a runtime check of one
 plain invariant, the whole
 deck state travels in one QUF.
 
-Three backends, one semantics:
+Three backends, one semantics — two verified, one experimental:
 - `python`  — soft fabric engine, bit-exact model of the quilt-verilog cell
 - `esp32`   — the deck graph on quilt-esp32's vendored quilt-vm-c (host loopback)
-- `fpga`    — iverilog cosim against rtl/q_serfabric_top.v (the serialized
-              fabric front-end; golden vectors from the differential TB)
+- `fpga`    — iverilog cosim against rtl/q_serfabric_top.v. **EXPERIMENTAL /
+  UNVERIFIED**: the cosim does not complete locally (measured 2026-08-30,
+  seed 7 sets 3: vvp killed at its own 20-min timeout at 100% CPU, no
+  egress produced). Byte-identity claims rest on the python and esp32
+  lanes only. Tracked in `cosim/corpus/MANIFEST.md` — the honest
+  negative lives there, not here.
 
-## Quickstart (every command verified from a clean clone)
+## Quickstart (python + esp32 commands verified from a clean clone; fpga unverified, see above)
 
 Requirements: Python 3.10+ (stdlib only — the app imports nothing beyond
 the standard library). `pytest` to run the test suite. The `fpga` backend
