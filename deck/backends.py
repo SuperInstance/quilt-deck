@@ -74,6 +74,11 @@ def run_python(log: List[dict], day: dict, warm_dials=None):
     from . import qufio
     quf_bytes = qufio.quf.build(doc)
     archive = qufio.build_archive(doc, led.books.snapshot())
+    # keep the on-disk artifact in lockstep with the esp32 backend's
+    quf_path = os.path.join(ROOT, "artifacts", "day_py.quf")
+    os.makedirs(os.path.dirname(quf_path), exist_ok=True)
+    with open(quf_path, "wb") as fh:
+        fh.write(archive)
     return fab, led, doc, quf_bytes, archive
 
 
@@ -215,9 +220,17 @@ def run_esp32(log: List[dict], day: dict):
     info = br.save(quf_path)
     br.close()
 
+    # Build the archive with app data (like the Python backend does)
+    doc = quf_doc(shadow)
+    from . import qufio as _q
+    archive = _q.build_archive(doc, led2.books.snapshot())
+    
+    # Overwrite the C-generated QUF with the archive that includes app data
+    with open(quf_path, "wb") as fh:
+        fh.write(archive)
+    
     with open(quf_path, "rb") as fh:
         quf_bytes = fh.read()
-    doc = quf_doc(shadow)
     return {
         "fab": shadow, "led": led2, "doc": doc, "quf_bytes": quf_bytes,
         "egress_match": mismatch is None and len(py_egress) == len(got_egress),
