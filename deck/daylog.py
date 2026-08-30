@@ -98,19 +98,27 @@ def gen_day(seed: int = 42, sets: int = 5, adversarial: bool = True) -> List[dic
 
 def replay(fab: Fabric, ledger: Optional[DeckLedger] = None,
            log: List[dict] = None, commission: bool = False,
-           on_flits: Optional[Callable[[List[Flit], int], None]] = None
+           on_flits: Optional[Callable] = None
            ) -> DeckLedger:
-    """Replay a day log against a fabric + ledger. on_flits(flits, segno)
-    lets the cosim/esp32 compilers capture the exact op stream; tick bursts
-    are signaled with an empty flit list."""
+    """Replay a day log against a fabric + ledger. on_flits(flits, segno,
+    ticks) lets the cosim/esp32 compilers capture the exact op stream; tick
+    bursts are signaled with an empty flit list and ticks=n."""
     if ledger is None:
         ledger = DeckLedger()
     if commission:
-        seg = commissioning_flits()
-        for f in seg:
-            fab.send(f)
-        if on_flits:
-            on_flits(seg, 0)
+        # commissioning in bounded segments, each followed by an alignment
+        # tick (the cosim protocol: no op segment may straddle a tick edge)
+        segs_all = commissioning_flits()
+        for i in range(0, len(segs_all), 30):
+            seg = segs_all[i:i + 30]
+            for f in seg:
+                fab.send(f)
+            if on_flits:
+                on_flits(seg, 0, 0)
+            fab.tick(1)
+            ledger.books.tick += 1
+            if on_flits:
+                on_flits([], 0, 1)
 
     state = {"segno": 1, "fires_seen": 0}
 
@@ -118,14 +126,14 @@ def replay(fab: Fabric, ledger: Optional[DeckLedger] = None,
         for f in flits:
             fab.send(f)
         if on_flits:
-            on_flits(flits, state["segno"])
+            on_flits(flits, state["segno"], 0)
         state["segno"] += 1
 
     def tick_burst(n: int):
         fab.tick(n)
         ledger.books.tick += n
         if on_flits:
-            on_flits([], state["segno"])   # tick-burst boundary marker
+            on_flits([], state["segno"], n)
         state["segno"] += 1
 
     for entry in log:
@@ -136,15 +144,18 @@ def replay(fab: Fabric, ledger: Optional[DeckLedger] = None,
             ledger.hooks(entry["set"], entry["visible"])
             emit([Flit(OP_EFF, src=EXTID, dst=7, dat=0x0800)
                   for _ in range(entry["visible"])])
+            tick_burst(1)   # segment + alignment tick (cosim protocol)
         elif t == "land":
             flits = ledger.land(entry["tote"], entry["sp"], entry["n"])
             for i in range(0, len(flits), LAND_CHUNK):
                 emit(flits[i:i + LAND_CHUNK])
+                tick_burst(1)
         elif t == "move":
             n = entry["n"]
             flits = ledger.move(entry["from"], entry["to"], n, entry["sp"])
             for i in range(0, len(flits), LAND_CHUNK):
                 emit(flits[i:i + LAND_CHUNK])
+                tick_burst(1)
         elif t == "uw":
             # underwater leave-frames; each XID-MATCH fire since the last
             # sighting retro-labels one sighting (host-mediated Law-4
@@ -159,12 +170,14 @@ def replay(fab: Fabric, ledger: Optional[DeckLedger] = None,
             flits += [Flit(OP_EFF, src=6, dst=14, dat=0x0800)
                       for _ in range(retro)]
             emit(flits)
+            tick_burst(1)
         elif t == "scale":
             # CAM-SCALE dial frames: the scale never stops talking; the
             # LEDGER joins species via the tote label bus (its trained
             # tote edges are exactly that join)
             emit([Flit(OP_EFF, src=EXTID, dst=9, dat=0x0800)
                   for _ in range(entry["frames"])])
+            tick_burst(1)
         elif t == "refuse":
             op = entry["op"]
             if op == "double-move":
@@ -182,11 +195,13 @@ def replay(fab: Fabric, ledger: Optional[DeckLedger] = None,
             tick_burst(entry["n"])
         elif t == "night":
             emit([Flit(OP_VIEW, src=EXTID, dst=11, a0=0, a2=NIGHT_VERDICT_TAG)])
+            tick_burst(1)
             quarantined = sum(1 for a in entry["audit"]
                               if a["verdict"] == "quarantine")
             if quarantined:
                 emit([Flit(OP_EFF, src=EXTID, dst=11, dat=0x0800)
                       for _ in range(quarantined)])
+                tick_burst(1)
             tick_burst(1)
             # A/B verdict: rollback is the NULL ACTION -- nothing written
             # unless the challenger clears PROMOTE_MARGIN (SYNTHESIS steal-1)

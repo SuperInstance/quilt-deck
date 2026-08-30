@@ -1,0 +1,1155 @@
+{
+  "day": {
+    "date": "2026-08-29",
+    "sets": 5,
+    "seed": 42,
+    "backend": "python",
+    "conformance": {
+      "cold_quf_sha256": "1d3909beecb615a59caae916a0c085f59558a0c009d75c36aabeebbc9e9b8fec",
+      "match": true
+    }
+  },
+  "quf_sha256": "1d3909beecb615a59caae916a0c085f59558a0c009d75c36aabeebbc9e9b8fec",
+  "quf_bytes": 47392,
+  "cells": [
+    {
+      "id": 0,
+      "name": "TOTE-PORT",
+      "act": 42,
+      "refr": 1,
+      "dials": [
+        612,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        77
+      ],
+      "edges": [
+        {
+          "slot": 0,
+          "peer": 5,
+          "base": 0,
+          "buckets": [
+            412,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wh": 1,
+          "age": 37
+        },
+        {
+          "slot": 1,
+          "peer": 9,
+          "base": 0,
+          "buckets": [
+            9,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wh": 0,
+          "age": 0
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "TOTE-HOLD",
+      "act": 15,
+      "refr": 1,
+      "dials": [
+        180,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        23
+      ],
+      "edges": [
+        {
+          "slot": 0,
+          "peer": 5,
+          "base": 0,
+          "buckets": [
+            188,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wh": 1,
+          "age": 52
+        },
+        {
+          "slot": 1,
+          "peer": 9,
+          "base": 0,
+          "buckets": [
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wh": 0,
+          "age": 0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "TOTE-STBD-F",
+      "act": 9,
+      "refr": 0,
+      "dials": [
+        31,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4
+      ],
+      "edges": [
+        {
+          "slot": 0,
+          "peer": 6,
+          "base": 0,
+          "buckets": [
+            14,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wh": 1,
+          "age": 44
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "TOTE-STBD-A",
+      "act": 9,
+      "refr": 0,
+      "dials": [
+        35,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4
+      ],
+      "edges": [
+        {
+          "slot": 0,
+          "peer": 6,
+          "base": 0,
+          "buckets": [
+            16,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wh": 1,
+          "age": 49
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "HOLD",
+      "act": 22,
+      "refr": 1,
+      "dials": [
+        22,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3
+      ],
+      "edges": [
+        {
+          "slot": 0,
+          "peer": 12,
+          "base": 0,
+          "buckets": [
+            22,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "wh": 1,
+          "age": 61
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "SOUNDER",
+      "act": 7,
+      "refr": 0,
+      "dials": [
+        7,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "edges": []
+    }
+  ],
+  "books": {
+    "landed": {
+      "pink": 3060,
+      "chum": 900,
+      "king": 70,
+      "coho": 155
+    },
+    "totes": {
+      "TOTE-PORT": {
+        "sp": "pink",
+        "n": 312,
+        "cap": 400
+      },
+      "TOTE-HOLD": {
+        "sp": "chum",
+        "n": 64,
+        "cap": 400
+      },
+      "TOTE-STBD-F": {
+        "sp": "king",
+        "n": 18,
+        "cap": 120
+      },
+      "TOTE-STBD-A": {
+        "sp": "coho",
+        "n": 27,
+        "cap": 120
+      }
+    },
+    "hold": {
+      "pink": 2748,
+      "chum": 836,
+      "king": 52,
+      "coho": 128
+    },
+    "moves": [
+      {
+        "t": 1,
+        "from": "TOTE-PORT",
+        "to": "HOLD",
+        "n": 400,
+        "sp": "pink"
+      },
+      {
+        "t": 2,
+        "from": "TOTE-PORT",
+        "to": "HOLD",
+        "n": 320,
+        "sp": "pink"
+      },
+      {
+        "t": 3,
+        "from": "TOTE-HOLD",
+        "to": "HOLD",
+        "n": 180,
+        "sp": "chum"
+      },
+      {
+        "t": 4,
+        "from": "TOTE-STBD-F",
+        "to": "HOLD",
+        "n": 12,
+        "sp": "king"
+      },
+      {
+        "t": 5,
+        "from": "TOTE-STBD-A",
+        "to": "HOLD",
+        "n": 31,
+        "sp": "coho"
+      },
+      {
+        "t": 7,
+        "from": "TOTE-PORT",
+        "to": "HOLD",
+        "n": 400,
+        "sp": "pink"
+      },
+      {
+        "t": 8,
+        "from": "TOTE-PORT",
+        "to": "HOLD",
+        "n": 245,
+        "sp": "pink"
+      },
+      {
+        "t": 9,
+        "from": "TOTE-HOLD",
+        "to": "HOLD",
+        "n": 190,
+        "sp": "chum"
+      },
+      {
+        "t": 10,
+        "from": "TOTE-STBD-F",
+        "to": "HOLD",
+        "n": 14,
+        "sp": "king"
+      },
+      {
+        "t": 11,
+        "from": "TOTE-STBD-A",
+        "to": "HOLD",
+        "n": 35,
+        "sp": "coho"
+      },
+      {
+        "t": 12,
+        "from": "TOTE-PORT",
+        "to": "HOLD",
+        "n": 400,
+        "sp": "pink"
+      },
+      {
+        "t": 13,
+        "from": "TOTE-PORT",
+        "to": "HOLD",
+        "n": 188,
+        "sp": "pink"
+      },
+      {
+        "t": 14,
+        "from": "TOTE-HOLD",
+        "to": "HOLD",
+        "n": 176,
+        "sp": "chum"
+      },
+      {
+        "t": 15,
+        "from": "TOTE-STBD-F",
+        "to": "HOLD",
+        "n": 15,
+        "sp": "king"
+      },
+      {
+        "t": 16,
+        "from": "TOTE-STBD-A",
+        "to": "HOLD",
+        "n": 30,
+        "sp": "coho"
+      },
+      {
+        "t": 17,
+        "from": "TOTE-PORT",
+        "to": "HOLD",
+        "n": 400,
+        "sp": "pink"
+      },
+      {
+        "t": 18,
+        "from": "TOTE-PORT",
+        "to": "HOLD",
+        "n": 162,
+        "sp": "pink"
+      },
+      {
+        "t": 19,
+        "from": "TOTE-HOLD",
+        "to": "HOLD",
+        "n": 168,
+        "sp": "chum"
+      },
+      {
+        "t": 20,
+        "from": "TOTE-STBD-F",
+        "to": "HOLD",
+        "n": 11,
+        "sp": "king"
+      },
+      {
+        "t": 21,
+        "from": "TOTE-STBD-A",
+        "to": "HOLD",
+        "n": 32,
+        "sp": "coho"
+      },
+      {
+        "t": 22,
+        "from": "TOTE-PORT",
+        "to": "HOLD",
+        "n": 233,
+        "sp": "pink"
+      },
+      {
+        "t": 23,
+        "from": "TOTE-HOLD",
+        "to": "HOLD",
+        "n": 122,
+        "sp": "chum"
+      }
+    ],
+    "refusals": [
+      {
+        "t": 6,
+        "op": "move",
+        "reason": "SPECIES_MISMATCH",
+        "detail": "TOTE-HOLD takes chum only; move of 40 pink refused"
+      },
+      {
+        "t": 24,
+        "op": "move",
+        "reason": "TOTE_OVERFLOW",
+        "detail": "TOTE-PORT holds 312 pink of 400 cap; move of 100 refused"
+      },
+      {
+        "t": 25,
+        "op": "credit",
+        "reason": "PHANTOM_HOLD_ENTRY",
+        "detail": "hold credit of 60 pink with no tote debit; fabric ghost refused"
+      }
+    ],
+    "conservation": {
+      "landed_total": 4185,
+      "totes_total": 421,
+      "hold_total": 3764,
+      "balanced": true
+    },
+    "hook_sets": [
+      {
+        "set": 1,
+        "hooks_visible": 30,
+        "depth_fm": 45
+      },
+      {
+        "set": 2,
+        "hooks_visible": 24,
+        "depth_fm": 36
+      },
+      {
+        "set": 3,
+        "hooks_visible": 27,
+        "depth_fm": 40.5
+      },
+      {
+        "set": 4,
+        "hooks_visible": 21,
+        "depth_fm": 31.5
+      },
+      {
+        "set": 5,
+        "hooks_visible": 30,
+        "depth_fm": 45
+      }
+    ],
+    "fires": [
+      {
+        "cell": "TOTE-PORT",
+        "dat": 24576,
+        "tick": 37
+      },
+      {
+        "cell": "TOTE-PORT",
+        "dat": 8192,
+        "tick": 112
+      },
+      {
+        "cell": "TOTE-HOLD",
+        "dat": 40960,
+        "tick": 141
+      },
+      {
+        "cell": "TOTE-STBD-F",
+        "dat": 16384,
+        "tick": 203
+      },
+      {
+        "cell": "TOTE-STBD-A",
+        "dat": 32768,
+        "tick": 240
+      },
+      {
+        "cell": "TOTE-PORT",
+        "dat": 57344,
+        "tick": 288
+      },
+      {
+        "cell": "TOTE-HOLD",
+        "dat": 12288,
+        "tick": 331
+      }
+    ]
+  },
+  "daylog": [
+    {
+      "t": "set",
+      "set": 1,
+      "fish": [
+        {
+          "sp": "pink",
+          "n": 720
+        },
+        {
+          "sp": "chum",
+          "n": 180
+        },
+        {
+          "sp": "king",
+          "n": 12
+        },
+        {
+          "sp": "coho",
+          "n": 31
+        }
+      ]
+    },
+    {
+      "t": "hooks",
+      "set": 1,
+      "visible": 30
+    },
+    {
+      "t": "land",
+      "set": 1,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 1,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 1,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 1,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 1,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 1,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 1,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 1,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 20
+    },
+    {
+      "t": "land",
+      "set": 1,
+      "tote": "TOTE-HOLD",
+      "sp": "chum",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 1,
+      "tote": "TOTE-HOLD",
+      "sp": "chum",
+      "n": 80
+    },
+    {
+      "t": "land",
+      "set": 1,
+      "tote": "TOTE-STBD-F",
+      "sp": "king",
+      "n": 12
+    },
+    {
+      "t": "land",
+      "set": 1,
+      "tote": "TOTE-STBD-A",
+      "sp": "coho",
+      "n": 31
+    },
+    {
+      "t": "uw",
+      "set": 1,
+      "sightings": 6
+    },
+    {
+      "t": "scale",
+      "set": 1,
+      "frames": 4
+    },
+    {
+      "t": "set",
+      "set": 2,
+      "fish": [
+        {
+          "sp": "pink",
+          "n": 645
+        },
+        {
+          "sp": "chum",
+          "n": 190
+        },
+        {
+          "sp": "king",
+          "n": 14
+        },
+        {
+          "sp": "coho",
+          "n": 35
+        }
+      ]
+    },
+    {
+      "t": "hooks",
+      "set": 2,
+      "visible": 24
+    },
+    {
+      "t": "land",
+      "set": 2,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 2,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 2,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 2,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 2,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 2,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 2,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 45
+    },
+    {
+      "t": "land",
+      "set": 2,
+      "tote": "TOTE-HOLD",
+      "sp": "chum",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 2,
+      "tote": "TOTE-HOLD",
+      "sp": "chum",
+      "n": 90
+    },
+    {
+      "t": "land",
+      "set": 2,
+      "tote": "TOTE-STBD-F",
+      "sp": "king",
+      "n": 14
+    },
+    {
+      "t": "land",
+      "set": 2,
+      "tote": "TOTE-STBD-A",
+      "sp": "coho",
+      "n": 35
+    },
+    {
+      "t": "uw",
+      "set": 2,
+      "sightings": 4
+    },
+    {
+      "t": "scale",
+      "set": 2,
+      "frames": 2
+    },
+    {
+      "t": "set",
+      "set": 3,
+      "fish": [
+        {
+          "sp": "pink",
+          "n": 588
+        },
+        {
+          "sp": "chum",
+          "n": 176
+        },
+        {
+          "sp": "king",
+          "n": 15
+        },
+        {
+          "sp": "coho",
+          "n": 30
+        }
+      ]
+    },
+    {
+      "t": "hooks",
+      "set": 3,
+      "visible": 27
+    },
+    {
+      "t": "land",
+      "set": 3,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 3,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 3,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 3,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 3,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 3,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 88
+    },
+    {
+      "t": "land",
+      "set": 3,
+      "tote": "TOTE-HOLD",
+      "sp": "chum",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 3,
+      "tote": "TOTE-HOLD",
+      "sp": "chum",
+      "n": 76
+    },
+    {
+      "t": "land",
+      "set": 3,
+      "tote": "TOTE-STBD-F",
+      "sp": "king",
+      "n": 15
+    },
+    {
+      "t": "land",
+      "set": 3,
+      "tote": "TOTE-STBD-A",
+      "sp": "coho",
+      "n": 30
+    },
+    {
+      "t": "uw",
+      "set": 3,
+      "sightings": 7
+    },
+    {
+      "t": "scale",
+      "set": 3,
+      "frames": 5
+    },
+    {
+      "t": "set",
+      "set": 4,
+      "fish": [
+        {
+          "sp": "pink",
+          "n": 562
+        },
+        {
+          "sp": "chum",
+          "n": 168
+        },
+        {
+          "sp": "king",
+          "n": 11
+        },
+        {
+          "sp": "coho",
+          "n": 32
+        }
+      ]
+    },
+    {
+      "t": "hooks",
+      "set": 4,
+      "visible": 21
+    },
+    {
+      "t": "land",
+      "set": 4,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 4,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 4,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 4,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 4,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 4,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 62
+    },
+    {
+      "t": "land",
+      "set": 4,
+      "tote": "TOTE-HOLD",
+      "sp": "chum",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 4,
+      "tote": "TOTE-HOLD",
+      "sp": "chum",
+      "n": 68
+    },
+    {
+      "t": "land",
+      "set": 4,
+      "tote": "TOTE-STBD-F",
+      "sp": "king",
+      "n": 11
+    },
+    {
+      "t": "land",
+      "set": 4,
+      "tote": "TOTE-STBD-A",
+      "sp": "coho",
+      "n": 32
+    },
+    {
+      "t": "uw",
+      "set": 4,
+      "sightings": 3
+    },
+    {
+      "t": "scale",
+      "set": 4,
+      "frames": 3
+    },
+    {
+      "t": "set",
+      "set": 5,
+      "fish": [
+        {
+          "sp": "pink",
+          "n": 545
+        },
+        {
+          "sp": "chum",
+          "n": 186
+        },
+        {
+          "sp": "king",
+          "n": 18
+        },
+        {
+          "sp": "coho",
+          "n": 27
+        }
+      ]
+    },
+    {
+      "t": "hooks",
+      "set": 5,
+      "visible": 30
+    },
+    {
+      "t": "land",
+      "set": 5,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 5,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 5,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 5,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 5,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 5,
+      "tote": "TOTE-PORT",
+      "sp": "pink",
+      "n": 45
+    },
+    {
+      "t": "land",
+      "set": 5,
+      "tote": "TOTE-HOLD",
+      "sp": "chum",
+      "n": 100
+    },
+    {
+      "t": "land",
+      "set": 5,
+      "tote": "TOTE-HOLD",
+      "sp": "chum",
+      "n": 86
+    },
+    {
+      "t": "land",
+      "set": 5,
+      "tote": "TOTE-STBD-F",
+      "sp": "king",
+      "n": 18
+    },
+    {
+      "t": "land",
+      "set": 5,
+      "tote": "TOTE-STBD-A",
+      "sp": "coho",
+      "n": 27
+    },
+    {
+      "t": "uw",
+      "set": 5,
+      "sightings": 5
+    },
+    {
+      "t": "scale",
+      "set": 5,
+      "frames": 4
+    },
+    {
+      "t": "night",
+      "audit": [
+        {
+          "fish": 0,
+          "verdict": "confirm"
+        },
+        {
+          "fish": 7,
+          "verdict": "quarantine"
+        },
+        {
+          "fish": 14,
+          "verdict": "confirm"
+        },
+        {
+          "fish": 21,
+          "verdict": "confirm"
+        }
+      ],
+      "ab": {
+        "promote": false,
+        "margin": 64
+      }
+    }
+  ]
+}

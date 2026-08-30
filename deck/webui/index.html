@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>quilt-deck — F/V EILEEN — day console</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hdr">
+  <div id="vessel" class="vessel"></div>
+  <div id="meta" class="meta"></div>
+  <button id="loadbtn" class="ghost" type="button" title="load a day JSON from disk">▤ load</button>
+</header>
+
+<section id="cons" class="cons" aria-live="polite"></section>
+
+<main>
+  <section>
+    <h2>▤ books</h2>
+    <div class="tbl-wrap"><table id="books"></table></div>
+  </section>
+
+  <section>
+    <h2>⚓ deck state</h2>
+    <div id="deck" class="deck"></div>
+  </section>
+
+  <section>
+    <h2>▤ hook line</h2>
+    <ul id="hooks" class="hooks"></ul>
+  </section>
+
+  <section>
+    <h2>▤ moves</h2>
+    <div class="tbl-wrap"><table id="moves"></table></div>
+  </section>
+
+  <section>
+    <h2>⚠ refusals</h2>
+    <div class="tbl-wrap"><table id="refusals"></table></div>
+  </section>
+
+  <section>
+    <h2>▤ fires</h2>
+    <ul id="fires" class="fires"></ul>
+  </section>
+</main>
+
+<footer id="ftr" class="ftr"></footer>
+
+<div id="picker" class="picker hidden">
+  <div class="picker-card">
+    <h3>⚓ offline load</h3>
+    <p id="pickmsg">pick a day-export JSON:</p>
+    <input type="file" id="filein" accept=".json,application/json">
+    <p id="pickerr" class="err" hidden></p>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
