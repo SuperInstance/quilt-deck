@@ -16,7 +16,9 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import queue
 import subprocess
+import threading
 import time
 from typing import Dict, List, Optional
 
@@ -87,7 +89,23 @@ class Esp32Bridge:
                 f"{binary} missing -- run: make -C esp32")
         self.p = subprocess.Popen([binary], stdin=subprocess.PIPE,
                                   stdout=subprocess.PIPE, text=True, bufsize=1)
-        self.banner = self.p.stdout.readline().strip()
+        # the bridge streams events as they happen; a full-duplex reader
+        # thread prevents the 64K pipe deadlock (write-write mutual block)
+        self.events_q: "queue.Queue[str]" = queue.Queue()
+        self._reader = threading.Thread(target=self._read_loop, daemon=True)
+        self._reader.start()
+        self.banner = self._next_line(timeout=10).strip()
+
+    def _read_loop(self):
+        for line in self.p.stdout:
+            self.events_q.put(line.rstrip("\n"))
+        self.events_q.put(None)
+
+    def _next_line(self, timeout: float = 60.0):
+        try:
+            return self.events_q.get(timeout=timeout)
+        except queue.Empty:
+            return ""
 
     def _cmd(self, line: str):
         self.p.stdin.write(line + "\n")
@@ -107,12 +125,20 @@ class Esp32Bridge:
         reads events after each phase via drain()."""
         return []
 
-    def drain(self, expect_events: int, timeout: float = 60.0) -> List[dict]:
-        events = []
+    def drain(self, quiet_cycles: int = 40, timeout: float = 300.0) -> List[dict]:
+        """Read until the stream is quiet (event-driven days have no fixed
+        count; quiescence = quiet_cycles consecutive 50ms empty polls)."""
+        events: List[dict] = []
+        quiet = 0
         deadline = time.time() + timeout
-        while len(events) < expect_events and time.time() < deadline:
-            line = self.p.stdout.readline()
-            if not line:
+        while quiet < quiet_cycles and time.time() < deadline:
+            try:
+                line = self.events_q.get(timeout=0.05)
+            except queue.Empty:
+                quiet += 1
+                continue
+            quiet = 0
+            if line is None:
                 break
             line = line.strip()
             if line.startswith("E "):
@@ -127,18 +153,17 @@ class Esp32Bridge:
 
     def dump(self) -> str:
         self._cmd("D")
-        # 15 cells x (DC + DA + 4 DE) = 90 lines
         lines = []
-        while len(lines) < 90:
-            line = self.p.stdout.readline()
+        while len(lines) < 90:            # 15 cells x (DC + DA + 4 DE)
+            line = self._next_line()
             if not line:
                 break
-            lines.append(line.rstrip("\n"))
+            lines.append(line)
         return "\n".join(lines)
 
     def save(self, path: str) -> str:
         self._cmd("S %s" % path)
-        return self.p.stdout.readline().strip()
+        return self._next_line()
 
     def close(self):
         try:
@@ -154,24 +179,20 @@ def run_esp32(log: List[dict], day: dict):
     led_ref = replay(fab_ref, DeckLedger(), log, commission=True)
 
     br = Esp32Bridge()
-    # replay against a SHADOW fabric (the soft model predicts every event;
-    # the bridge must emit the same stream), feeding the bridge live:
+    # replay against a SHADOW fabric: replay() itself drives the fabric;
+    # on_flits is an OBSERVER that mirrors the same stream to the bridge
     shadow = Fabric(ncell=NCELL)
 
     def feeder(flits, segno, ticks=0):
-        if flits:
-            for f in flits:
-                shadow.send(f)
-                br.flit(f)
-        if ticks:
-            shadow.tick(ticks)
-            br.tick(ticks)
+        for f in flits or ():
+            br.flit(f)          # mirror only -- replay sends to the fabric
+        for _ in range(ticks or 0):
+            br.tick(1)
 
     led2 = replay(shadow, DeckLedger(), log, commission=True, on_flits=feeder)
 
-    # read all events the bridge produced (count = python egress + fires)
-    want = len(shadow.egress) + len(shadow.fires)
-    events = br.drain(want + 8, timeout=120)
+    # collect everything the bridge produced (quiescence-based)
+    events = br.drain(quiet_cycles=60, timeout=300)
     br_egress = [e for e in events if e["kind"] == "egress"]
     br_fires = [e for e in events if e["kind"] == "fire"]
 

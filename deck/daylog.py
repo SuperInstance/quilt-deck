@@ -61,7 +61,8 @@ def gen_day(seed: int = 42, sets: int = 5, adversarial: bool = True) -> List[dic
                     brail = loads[cid] - 12 if loads[cid] > 24 else loads[cid]
                     if brail > 0:
                         log.append({"t": "move", "from": tote, "to": "HOLD",
-                                    "sp": sp, "n": brail})
+                                    "sp": sp, "n": brail,
+                                    "id": "mid-brail-%d-%d" % (s, cid)})
                         loads[cid] -= brail
                     if loads[cid] >= TOTE_CAPACITY[cid]:
                         n = 0  # physically cannot take more this brail cycle
@@ -79,7 +80,8 @@ def gen_day(seed: int = 42, sets: int = 5, adversarial: bool = True) -> List[dic
             brail = loads[cid] - 12 if loads[cid] > 24 else loads[cid]
             if brail > 0:
                 log.append({"t": "move", "from": tote, "to": "HOLD",
-                            "sp": sp, "n": brail})
+                            "sp": sp, "n": brail,
+                            "id": "set-brail-%d-%d" % (s, cid)})
                 loads[cid] -= brail
     if adversarial:
         log.append({"t": "refuse", "op": "double-move"})
@@ -152,7 +154,8 @@ def replay(fab: Fabric, ledger: Optional[DeckLedger] = None,
                 tick_burst(1)
         elif t == "move":
             n = entry["n"]
-            flits = ledger.move(entry["from"], entry["to"], n, entry["sp"])
+            flits = ledger.move(entry["from"], entry["to"], n, entry["sp"],
+                                booking_id=entry.get("id", ""))
             for i in range(0, len(flits), LAND_CHUNK):
                 emit(flits[i:i + LAND_CHUNK])
                 tick_burst(1)
@@ -183,7 +186,11 @@ def replay(fab: Fabric, ledger: Optional[DeckLedger] = None,
             if op == "double-move":
                 if ledger.books.moves:
                     m = ledger.books.moves[-1]
-                    flits = ledger.move(m.src, m.dst, m.n, m.sp)
+                    if m.id:   # replay the booking key verbatim
+                        flits = ledger.move(m.src, m.dst, m.n, m.sp,
+                                            booking_id=m.id)
+                    else:      # no key: same-tick identical terms twin
+                        flits = ledger.move(m.src, m.dst, m.n, m.sp)
                     assert not flits, "double-move must refuse"
                 else:
                     ledger.move("TOTE-PORT", "HOLD", 40, "pink")

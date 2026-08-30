@@ -170,11 +170,11 @@ static void engine_train(Cell *c, Edge *e, int gclass) {
 
 static void engine_tick(Cell *c, Edge *e) {
     if (!(c->dials[D_MODE] & 1)) {
-        if ((unsigned)c->hl_cnt + 1 >= c->dials[D_HL]) {
+        if ((unsigned)e->hl_cnt + 1 >= c->dials[D_HL]) {
             for (int i = K - 1; i > 0; i--) e->c[i] = e->c[i - 1];
             e->c[0] = 0;
-            c->hl_cnt = 0;
-        } else c->hl_cnt++;
+            e->hl_cnt = 0;
+        } else e->hl_cnt++;
     } else {
         unsigned p0 = 1u << (c->dials[D_P0E] & 0x1F);
         int msb = 0;
@@ -319,7 +319,8 @@ static void op_inverse(qvm_thing_t *t, void *arg) {
 
 static void vm_apply(const Flit *f, int is_tick, int n) {
     static OpArg arg;
-    arg.f = *f; arg.is_tick = is_tick; arg.n = n;
+    if (f) arg.f = *f; else memset(&arg.f, 0, sizeof arg.f);
+    arg.is_tick = is_tick; arg.n = n;
     memcpy(arg.snap, deck.cells, sizeof(arg.snap));
     char target[32];
     snprintf(target, sizeof target, "deck/%s",
@@ -330,11 +331,6 @@ static void vm_apply(const Flit *f, int is_tick, int n) {
 
 /* ---------------- state dump / QUF save ------------------------------- */
 
-static const char *CELL_NAMES[NCELL] = {
-    "TOTE-PORT", "TOTE-HOLD", "TOTE-STBD-F", "TOTE-STBD-A", "HOLD",
-    "ALIAS", "XID-MATCH", "HOOK-COUNT", "SOUNDER", "LEDGER-SCALE",
-    "BESTSHOT", "AUDIT-CAPTAIN", "NIGHT-CRON", "AB-PROMOTE", "CAM-UW"};
-
 static void dump_state(void) {
     for (int i = 0; i < NCELL; i++) {
         Cell *c = &deck.cells[i];
@@ -344,7 +340,7 @@ static void dump_state(void) {
         for (int e = 0; e < EDGES_N; e++) {
             Edge *g = &c->edges[e];
             fprintf(deck.out, "DE %d %d %u %u %u %u %u %u",
-                    i, e, g->valid, g->peer, g->base, c->hl_cnt, g->wh, g->age);
+                    i, e, g->valid, g->peer, g->base, g->hl_cnt, g->wh, g->age);
             for (int b = 0; b < K; b++) fprintf(deck.out, " %u", g->c[b]);
             fprintf(deck.out, "\n");
         }
@@ -356,6 +352,10 @@ static void quf_save(const char *path) {
     memset(&doc, 0, sizeof doc);
     doc.cell_count = NCELL;
     doc.tpw = 15;
+    doc.producer = "quilt-deck 1.0";
+    doc.edge_k = K;
+    doc.tick_period = 1u << 15;
+    doc.align = 32;
     static unsigned short dials[NCELL][16];
     for (int i = 0; i < NCELL; i++)
         for (int d = 0; d < NDIALS; d++)
@@ -375,7 +375,6 @@ static void quf_save(const char *path) {
             edges[ne].wh = g->wh;
             edges[ne].age = g->age;
             for (int b = 0; b < K; b++) edges[ne].buckets[b] = g->c[b];
-            edges[ne].n_buckets = K;
             ne++;
         }
     doc.edges = edges;
@@ -384,7 +383,9 @@ static void quf_save(const char *path) {
     for (int i = 0; i < NCELL; i++) { routing[i][0] = i; routing[i][1] = i; }
     doc.routing = routing[0];
     doc.route_count = NCELL;
-    doc.phases = NULL;
+    static unsigned int phases[NCELL];   /* v1 single clock: phases 0 */
+    for (int i = 0; i < NCELL; i++) phases[i] = 0;
+    doc.ticks_phases = phases;
     static unsigned char buf[65536];
     size_t n = qufc_build(&doc, buf, sizeof buf);
     if (n == 0) { fprintf(deck.out, "# quf_build FAILED\n"); return; }
@@ -426,7 +427,7 @@ static void quf_load(const char *path) {
            which the conformance suite proves) */
         c->edges[g->slot].wh = g->wh;
         c->edges[g->slot].age = g->age;
-        for (int b = 0; b < K && b < g->n_buckets; b++)
+        for (int b = 0; b < K; b++)
             c->edges[g->slot].c[b] = g->buckets[b];
     }
     fprintf(deck.out, "# loaded %zu bytes from %s\n", n, path);
@@ -460,6 +461,7 @@ int main(int argc, char **argv) {
     qm_link(deck.vm, "deck/HOOK-COUNT", "deck/SOUNDER", "depth-pairs");
     qm_link(deck.vm, "deck/AUDIT-CAPTAIN", "deck/NIGHT-CRON", "quarantine");
 
+    qm_bind_str(deck.vm, "deck/tick", "{\"kind\":\"fabric-decay\"}");
     fprintf(deck.out, "# deckbridge up: %d cells on quilt-vm-c\n", NCELL);
     fflush(deck.out);
 

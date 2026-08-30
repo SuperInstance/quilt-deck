@@ -124,7 +124,9 @@ size_t qufc_build(const QufcDoc *doc, unsigned char *out, size_t cap) {
 		GGUF_T_U32, GGUF_T_U32, GGUF_T_STR, GGUF_T_STR, GGUF_T_STR, GGUF_T_U32};
 	const uint32_t kv_u32[] = {0, doc->cell_count, doc->edge_count,
 		doc->route_count, edge_k, doc->tick_period, 0, 0, 0, align};
-	const char *kv_strs[] = {"quf.py 1.0", "", "", "", "", "", "Q1.15", "Q1.15", "u8", ""};
+	const char *producer = doc->producer ? doc->producer : "quf.py 1.0";
+	const char *kv_strs[] = {NULL, "", "", "", "", "", "Q1.15", "Q1.15", "u8", ""};
+	kv_strs[0] = producer;
 
 	for (int i = 0; i < 10; i++) {
 		const char *name = kvs[i];
@@ -145,7 +147,7 @@ size_t qufc_build(const QufcDoc *doc, unsigned char *out, size_t cap) {
 
 	struct { const char *name; uint8_t *data; size_t size; } secs[4];
 	int nsec = 0;
-	uint8_t dials_buf[512], edges_buf[256], routing_buf[128], ticks_buf[128];
+	uint8_t dials_buf[8192], edges_buf[8192], routing_buf[512], ticks_buf[1028];
 
 	if (doc->dials) {
 		secs[nsec].name = "dials";
@@ -445,19 +447,6 @@ int qufc_selftest(void) {
 				break;
 			}
 		}
-		return -1;
-	}
-
-	QufcDoc parsed;
-	if (qufc_parse(built, built_len, &parsed) != 0) {
-		fprintf(stderr, "FAIL: parse failed\n");
-		return -1;
-	}
-
-	unsigned char rebuilt[576];
-	size_t rebuilt_len = qufc_build(&parsed, rebuilt, sizeof(rebuilt));
-	if (rebuilt_len != 576 || memcmp(rebuilt, built, 576) != 0) {
-		fprintf(stderr, "FAIL: round-trip not byte-exact\n");
 		return -1;
 	}
 

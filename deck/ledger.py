@@ -29,6 +29,7 @@ class Move:
     dst: str
     n: int
     sp: str
+    id: str = ""    # idempotency key: same key twice = DOUBLE_MOVE
 
 
 @dataclass
@@ -156,10 +157,13 @@ class DeckLedger:
         from .graph import LAND_DAT
         return [Flit(OP_EFF, src=EXTID, dst=cid, dat=LAND_DAT) for _ in range(n)]
 
-    def move(self, src: str, dst: str, n: int, sp: str) -> List[Flit]:
+    def move(self, src: str, dst: str, n: int, sp: str,
+             booking_id: str = "") -> List[Flit]:
         """Move n fish src→dst (tote→tote or tote→HOLD). A move is a
         balanced transaction: debit then credit, one fabric effect per
-        fish, refused whole if either side fails."""
+        fish, refused whole if either side fails. booking_id is the
+        idempotency key: a replayed booking is DOUBLE_MOVE regardless of
+        balances (the precise diagnosis of a double-submit)."""
         op = "move"
         s, d = self.resolve(src), self.resolve(dst)
         if s is None or d is None:
@@ -176,11 +180,13 @@ class DeckLedger:
         if s == HOLD_ID:
             self._refuse(op, "NOT_A_MOVE", "hold is terminal custody — no hold-out")
             return []
-        # double-move guard first: an identical booking at the same tick is
-        # a replay no matter what the balances say (the precise diagnosis)
+        # idempotency first: a replayed booking key is a double-submit no
+        # matter what the balances say; identical terms at the same tick
+        # without a key is the heuristic twin
         for m in self.books.moves:
-            if (m.t == self.books.tick and m.src == src and m.dst == dst
-                    and m.sp == sp and m.n == n):
+            if ((booking_id and m.id == booking_id)
+                or (m.t == self.books.tick and m.src == src and m.dst == dst
+                    and m.sp == sp and m.n == n)):
                 self._refuse(op, "DOUBLE_MOVE",
                              f"identical move booked this tick ({src}->{dst} "
                              f"{n} {sp})")
@@ -214,7 +220,8 @@ class DeckLedger:
             self.books.hold[sp] += n
         else:
             self.books.totes[d][sp] += n
-        self.books.moves.append(Move(self.books.tick, src, dst, n, sp))
+        self.books.moves.append(Move(self.books.tick, src, dst, n, sp,
+                                      booking_id))
         # fabric: host-mediated tote->dst effects, src spoofed as the tote
         # (the deck gesture enters through the app adapter, Law 4)
         return [Flit(OP_EFF, src=s, dst=d, dat=0x0800) for _ in range(n)]
