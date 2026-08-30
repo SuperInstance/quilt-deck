@@ -55,12 +55,20 @@ def cmd_day(args):
             json.dump(export, fh, indent=1, sort_keys=True)
         print(f"export -> {args.export}")
     b = export["books"]["conservation"]
-    print(f"day: {b['landed_total']} fish landed | totes {b['totes_total']} "
-          f"| hold {b['hold_total']} | unbooked {b['unbooked']} "
-          f"| balanced {b['balanced']}")
-    print(f"quf: {export['quf_bytes']} B sha256 {export['quf_sha256'][:16]}")
-    for r in export["books"]["refusals"]:
-        print(f"REFUSED [{r['reason']}] {r['detail']}")
+    if getattr(args, "summary", False):
+        bal = "ok" if b["balanced"] else "VIOLATION"
+        print(f"day {args.date} seed={args.seed} sets={args.sets} "
+              f"backend={args.backend}: landed {b['landed_total']} "
+              f"({b['balanced'] and 'balanced' or 'VIOLATION'}), "
+              f"{len(export['books']['refusals'])} refusals, "
+              f"quf {export['quf_bytes']}B {export['quf_sha256'][:16]}")
+    else:
+        print(f"day: {b['landed_total']} fish landed | totes {b['totes_total']} "
+              f"| hold {b['hold_total']} | unbooked {b['unbooked']} "
+              f"| balanced {b['balanced']}")
+        print(f"quf: {export['quf_bytes']} B sha256 {export['quf_sha256'][:16]}")
+        for r in export["books"]["refusals"]:
+            print(f"REFUSED [{r['reason']}] {r['detail']}")
     return 0
 
 
