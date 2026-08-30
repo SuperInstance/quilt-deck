@@ -2,7 +2,7 @@
 
   python3 -m deck new [--out deck.quf]        commission a cold graph QUF
   python3 -m deck day [--seed 42] [--sets 5] [--backend python|esp32|fpga]
-                      [--export day.json] [--quf day.quf]
+                      [--export day.json] [--quf day.quf] [--summary]
   python3 -m deck books DAY.json              the balance ledger of the day
   python3 -m deck verify DAY.quf              structural + conservation check
   python3 -m deck warm DAY.quf --ops more.json [--out day2.quf]
@@ -73,10 +73,13 @@ def cmd_books(args):
     print(f"landed {c['landed_total']} = totes {c['totes_total']} + hold "
           f"{c['hold_total']} + unbooked {c['unbooked']} — "
           f"{'BALANCED' if c['balanced'] else 'VIOLATION'}")
-    print(f"{'species':8s} {'landed':>8s} {'totes':>8s} {'hold':>8s}")
+    print(f"{'species':8s} {'landed':>8s} {'totes':>8s} {'hold':>8s} {'efficiency':>10s}")
     for sp in ("pink", "chum", "king", "coho"):
+        landed = b['landed'][sp]
         totes = sum(t["n"] for t in b["totes"].values() if t["sp"] == sp)
-        print(f"{sp:8s} {b['landed'][sp]:8d} {totes:8d} {b['hold'][sp]:8d}")
+        hold = b['hold'][sp]
+        efficiency = (totes / landed * 100) if landed > 0 else 0
+        print(f"{sp:8s} {landed:8d} {totes:8d} {hold:8d} {efficiency:9.1f}%")
     print(f"moves: {len(b['moves'])} booked")
     if b["refusals"]:
         print("refusals:")
@@ -156,6 +159,8 @@ def main(argv=None):
                    default="python")
     s.add_argument("--export", default=None)
     s.add_argument("--quf", default=None)
+    s.add_argument("--summary", action="store_true",
+                   help="compact one-line summary output")
 
     s = sub.add_parser("books")
     s.add_argument("DAY")
