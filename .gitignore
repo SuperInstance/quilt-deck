@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+build/
+artifacts/
+*.vvp
+*.quf
+*.hex
+node_modules/
