@@ -51,10 +51,13 @@ What a day produces and where to look:
   nothing vanishes, and a refused move moves nothing.** This is the app
   face of the fabric's ledger identity A1/T1 (`emit = pipe + acc`;
   `emit + ext = book + pipe + (acc − book) + ext`, constant across
-  commits). The canonical machine-checked wording is the BMC-55 statement
-  in quilt-verilog's `docs/FORMAL-PROOFS.md` (commit b82cd19) — cite that
-  document, not a paraphrase, until the L1/L2 strengthening lemmas close
-  `mode prove`.
+  commits). The canonical machine-checked wording is quilt-verilog's
+  `docs/FORMAL-PROOFS.md`, which since 2026-08-30 carries an UNBOUNDED
+  proof: `fabric.conservation.pdr.sby`, `mode prove`, engine `abc pdr`,
+  25.9 s, frame 9 (commit 4b67c30; supersedes the BMC-55 statement cited
+  at b82cd19). Re-verifiers: `abc pdr` is load-bearing — the same
+  harness under smtbmc k-induction FAILS (b82cd19, re-confirmed on the
+  current tree).
 
 Also on the operator surface: `python3 -m deck day --summary` prints a
 one-line summary; `python3 -m deck latest` symlinks `latest.json` to the
