@@ -121,3 +121,17 @@ sha256sum /tmp/s7.*.quf                # record these in the table
   byte-identical (4032 B, cmp passes); the 1888 B figure is the
   payload-only CLI line. The "fpga differs" claim was withdrawn — no
   file was ever produced. Lesson recorded in the definitions above.
+- **2026-08-30 (TEACHER nudge, ACCEPTED — cross-ref, cross-repo):**
+  this MANIFEST's "zero egress / idle-spin suspected" entries were
+  written under an instrument illusion. RESOLVED same day by
+  eco-quiltverilog's probe (verdict delivered via bridge, runId
+  b69beefb): there was no hang and no RTL suspect. The "×1000 tick
+  period" was a probe artifact — Verilog `%t` formats in the design's
+  finest declared precision (1ps), so 327,680,000 read as ns was
+  327,680 ns = exactly the spec'd 32,768 cycles (TPW0=15). Remaining
+  real cause: observer throughput (~3k cycles/s wall vs a ~6M-cycle
+  day) with killed runs losing unflushed stdio → the zero-egress
+  reading. Full write-up: quilt-verilog `docs/INCIDENTS.md`, "The
+  ×1000 tick that never was" (11e2082). Anyone reading the fpga
+  UNVERIFIED status above should read it as "slow harness, since
+  fixed by verdict", not "divergence".
