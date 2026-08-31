@@ -6,3 +6,5 @@ artifacts/
 *.quf
 *.hex
 node_modules/
+cosim/run/*
+!cosim/run/README.md
