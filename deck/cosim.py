@@ -18,6 +18,7 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
+import time
 from typing import Dict, List, Optional, Tuple
 
 from . import qufio
@@ -30,6 +31,16 @@ QV = os.path.expanduser("~/projects/quilt-verilog")
 HERE = os.path.dirname(os.path.abspath(__file__))
 COSIM = os.path.normpath(os.path.join(HERE, "..", "cosim"))
 RUN = os.path.join(COSIM, "run")
+
+
+def _egr_lines(run_dir: str, phase: str) -> int:
+    """Count flushed egress lines in run/<phase>.egr (0 if absent/empty)."""
+    p = os.path.join(run_dir, f"{phase}.egr")
+    try:
+        with open(p) as f:
+            return sum(1 for line in f if line.strip())
+    except OSError:
+        return 0
 
 
 def _settle_for(nframes: int) -> int:
@@ -241,15 +252,35 @@ def run(seed: int = 42, sets: int = 5, keep: bool = True,
     if r.returncode != 0:
         return False, ["iverilog failed:\n" + r.stdout + r.stderr]
     try:
-        r = subprocess.run(["vvp", vvp], cwd=COSIM, capture_output=True,
-                           text=True, timeout=1200)
+        import threading
+        stop = threading.Event()
+        t0 = time.time()
+        def progress():
+            while not stop.wait(30):
+                print(f"fpga: simulating... {time.time()-t0:.0f}s elapsed "
+                      f"(egress so far: cold={_egr_lines(RUN, 'cold')}, "
+                      f"warm={_egr_lines(RUN, 'warm')})")
+        threading.Thread(target=progress, daemon=True).start()
+        try:
+            r = subprocess.run(["vvp", vvp], cwd=COSIM, capture_output=True,
+                               text=True, timeout=1200)
+        finally:
+            stop.set()
     except subprocess.TimeoutExpired:
+        c = _egr_lines(RUN, "cold"); w = _egr_lines(RUN, "warm")
+        if c or w:
+            return False, [
+                f"vvp TIMED OUT after 1200s; PARTIAL results recovered: "
+                f"cold={c} egress lines, warm={w} egress lines (written "
+                f"incrementally; see cosim/corpus/MANIFEST.md). The fpga "
+                f"lane is EXPERIMENTAL and currently UNVERIFIED."]
         return False, [
-            "vvp TIMED OUT after 1200s: the cosim did not reach COSIM DONE "
-            "(measured 2026-08-30, seed 7 sets 3: 20 min at 100% CPU, no "
-            "egress produced). The fpga lane is EXPERIMENTAL and currently "
-            "UNVERIFIED — tracked in cosim/corpus/MANIFEST.md. The python "
-            "and esp32 lanes carry the byte-identity treaty."]
+            "vvp TIMED OUT after 1200s: ZERO egress lines (files written "
+            "incrementally since the $fflush fix — zero here means the TB "
+            "emitted nothing, not that output was lost on kill). The fpga "
+            "lane is EXPERIMENTAL and currently UNVERIFIED — tracked in "
+            "cosim/corpus/MANIFEST.md. The python and esp32 lanes carry "
+            "the byte-identity treaty."]
     if verbose:
         print(r.stdout[-2000:])
     if "COSIM DONE" not in r.stdout:

@@ -147,6 +147,7 @@ module tb_deck_cosim;
         if (c_stx_val) begin
             if (c_tby == 9) begin
                 $fdisplay(efc, "E %h", {c_tcap[71:0], c_stx});
+                $fflush(efc);  // survive harness kill: egress visible incrementally
                 c_tby <= 0;
             end else begin
                 c_tcap <= {c_tcap[71:0], c_stx};
@@ -160,6 +161,7 @@ module tb_deck_cosim;
         if (w_stx_val) begin
             if (w_tby == 9) begin
                 $fdisplay(efw, "E %h", {w_tcap[71:0], w_stx});
+                $fflush(efw);  // survive harness kill: egress visible incrementally
                 w_tby <= 0;
             end else begin
                 w_tcap <= {w_tcap[71:0], w_stx};

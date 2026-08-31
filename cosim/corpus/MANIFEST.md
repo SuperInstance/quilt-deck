@@ -69,14 +69,24 @@ the bisect rules out "merely 3× slow", not "TB-internal loop".
   OPEN — first probe for the owner: dump `$time` progress from the TB
   to distinguish busy-sim from idle-spin.
 
-### Plan of record for this lane
+### Plan of record for this lane (one path, staged)
 
-Scout filing
-`ecosystem/scout/2026-08-30-renode-verilator-cosim-deterministic-fpga-lane.md`
-(in the OpenClaw workspace): Renode + Verilator co-simulation — a
-deterministic, headless, CI-runnable FPGA lane that escapes the
-iverilog-hang class entirely. Until that lands, the byte-identity
-treaty rests on the python and esp32 lanes only.
+**Stage 1 — Verilator-swapped-vvp (first, harness patch):** replace the
+vvp runner inside the existing cosim harness with a Verilator-compiled
+model — local, preserves the golden-vector differential structure, and
+the expected 50–200× speedup likely brings the full day under a
+minute, making the fpga corpus entry verifiable from CI. Nothing about
+the treaty changes; only the simulator engine swaps.
+
+**Stage 2 — Renode (later, boat-shaped case):** the full peripheral
+environment (Renode `CoSimulatedPeripheral` per scout filing
+`ecosystem/scout/2026-08-30-renode-verilator-cosim-deterministic-fpga-lane.md`)
+for when the whole boat story is needed, not just the fabric. Renode
+is a new simulation platform with its own firmware story — different
+cost, different scope; sequenced after Stage 1, not parallel.
+
+Until Stage 1 lands, the byte-identity treaty rests on the python and
+esp32 lanes only.
 
 ## Verification recipe
 
