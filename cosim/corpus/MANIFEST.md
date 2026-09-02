@@ -63,6 +63,28 @@ find where frame #36's send is dropped or mis-acked); harness side
 already validated (scripts are generated from the same day log that
 carries the python+esp32 treaty).
 
+### Culprit attribution (STUDENT nudge, 2026-09-02): DIVERGENT ≠ culprit named
+
+There is **no tie-breaker in deck/cosim.py** — the harness is
+differential by construction and treats the python soft model as the
+reference. The assumption that python is the one to trust is stated
+here, with its corroboration: python's end state is byte-identical to
+an INDEPENDENT C implementation (the esp32 lane, vendored quilt-vm-c)
+across seeds 7/11/23, so "trust python" is really "two independent
+implementations agree." That is still an assumption, and the x1000 %t
+correction (32a212b) shows the python side has erred before.
+
+Named tie-breaker plan (booked thread, owner eco-quiltverilog):
+quilt-verilog's G3 k-induction certificate (fabric.conservation,
+unbounded PASS) machine-checks `emit = pipe + acc` on the real RTL. At
+the diverging frame, evaluating the invariant on BOTH sides' state
+would pin the culprit: RTL-side violation ⇒ RTL bug; python-side
+violation ⇒ model bug; neither ⇒ the divergence lives outside the
+invariant's coverage (read-out/reporting path, not the core). This
+needs TB instrumentation — pipe/acc are transport counters, NOT in the
+current *.dump state format — so it is a TB change in
+quilt-verilog's lane, not a harness patch here.
+
 _Caveat kept honest: iverilog never produced comparable output (the
 vvp hang), so "divergent" means divergent-from-python under Verilator,
 not divergent-from-iverilog. If iverilog ever finishes, compare its
