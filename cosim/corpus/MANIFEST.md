@@ -34,15 +34,39 @@ earlier version of this table mislabeled as the *seed files* — those
 were in fact these same 4032-byte files; only the seed-7 rows mixed in
 a payload hash. All rows now carry whole-file hashes exclusively.
 
-## FPGA status: NOT VERIFIED LOCALLY (not "differs")
+## FPGA status: engine-swapped (Stage 1 LANDED 2026-09-02); lane DIVERGENT
 
-`--backend fpga` does not complete in this environment: vvp runs
-CPU-bound and is killed at its in-code 1200s timeout with zero egress
-produced (measured 2026-08-30, seed 7 sets 3). An earlier note
-here claimed "python & fpga: differs" — that was WRONG: the comparison
-ran against a nonexistent/stale file. There is no evidence of
-divergence, only absence of evidence. The treaty treats fpga as an
-UNVERIFIED lane, not a broken one.
+**Stage 1 (Verilator-swapped-vvp) landed 2026-09-02:** `deck/cosim.py`
+now builds the same TB + RTL with `verilator --binary --timing`
+(5.032) by default; `iverilog`+`vvp` remains as the documented fallback
+(`DECK_COSIM_ENGINE=iverilog`). The vvp zero-egress hang was
+engine-specific: under Verilator the full seed-7 day completes in ~82s
+with `COSIM DONE` and 93+93 egress lines.
+
+**First-ever differential verdict: the RTL DUT DIVERGES from the python
+soft model.** (seed 7, sets 3, measured 2026-09-02.) Egress: pred 127
+frames vs RTL 93; first mismatch at frame #36 (pred `a0a0…` vs RTL
+`a3e0…`; RTL then emits a regular ascending ladder `a3e0 a5e0 a7e0
+afe0 b1e0 …` — pattern shape suggests dropped op frames / unsolicited
+epoch-class output, root cause TBD). State: cold.dump contains 4 edge
+buckets (slot 6) out of u8 range (e.g. 255255), so the QUF rebuild
+rejects the RTL state outright. **X-sensitivity ruled out:** rebuilt
+with `--x-initial unique` + `+verilator+rand+reset+2` — egress streams
+byte-identical to the zero-init run (X_INERT cold and warm). This is
+real DUT-model divergence, not a 2-state artifact.
+
+Treaty impact: NONE — the treaty already rested on python+esp32 only.
+But the fpga lane's honest status changes from UNVERIFIED (no data) to
+**DIVERGENT (data in hand)**. Cause ownership per the section below:
+RTL/TB codepath = eco-quiltverilog (probe: replay the op script and
+find where frame #36's send is dropped or mis-acked); harness side
+already validated (scripts are generated from the same day log that
+carries the python+esp32 treaty).
+
+_Caveat kept honest: iverilog never produced comparable output (the
+vvp hang), so "divergent" means divergent-from-python under Verilator,
+not divergent-from-iverilog. If iverilog ever finishes, compare its
+egress to the committed Verilator streams before pinning cause._
 
 ### Discriminator (TEACHER sets-bisect, 2026-08-30): zero-egress class
 

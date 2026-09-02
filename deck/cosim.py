@@ -16,6 +16,7 @@ quilt-verilog is never modified; its rtl/ is compiled with -I flags only.
 from __future__ import annotations
 
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -244,13 +245,27 @@ def run(seed: int = 42, sets: int = 5, keep: bool = True,
     if verbose:
         print("fpga: compiling RTL + simulating (CPU-bound; capped at "
               "20 min — see cosim/corpus/MANIFEST.md for lane status)")
+    # engine selection: Verilator (--binary, Stage 1 of the plan of
+    # record in cosim/corpus/MANIFEST.md) when available, iverilog+vvp
+    # as the documented fallback. Same TB, same scripts, same treaty.
     vvp = os.path.join(RUN, "tb.vvp")
+    vbin = os.path.join(RUN, "obj_verilator", "tb")
     rtl = sorted(os.path.join(QV, "rtl", f) for f in os.listdir(os.path.join(QV, "rtl"))
                  if f.endswith(".v"))
-    cmd = ["iverilog", "-g2005", "-o", vvp] + rtl + [os.path.join(COSIM, "tb_deck_cosim.v")]
+    use_verilator = shutil.which("verilator") is not None and os.environ.get(
+        "DECK_COSIM_ENGINE", "verilator") == "verilator"
+    if use_verilator:
+        cmd = ["verilator", "--binary", "--timing", "-Wno-fatal", "-j", "4",
+               "--Mdir", os.path.join(RUN, "obj_verilator"), "-o", "tb",
+               "--top-module", "tb_deck_cosim",
+               os.path.join(COSIM, "tb_deck_cosim.v")] + rtl
+        sim_argv = [vbin]
+    else:
+        cmd = ["iverilog", "-g2005", "-o", vvp] + rtl + [os.path.join(COSIM, "tb_deck_cosim.v")]
+        sim_argv = ["vvp", vvp]
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode != 0:
-        return False, ["iverilog failed:\n" + r.stdout + r.stderr]
+        return False, [cmd[0] + " failed:\n" + r.stdout + r.stderr]
     try:
         import threading
         stop = threading.Event()
@@ -262,7 +277,7 @@ def run(seed: int = 42, sets: int = 5, keep: bool = True,
                       f"warm={_egr_lines(RUN, 'warm')})")
         threading.Thread(target=progress, daemon=True).start()
         try:
-            r = subprocess.run(["vvp", vvp], cwd=COSIM, capture_output=True,
+            r = subprocess.run(sim_argv, cwd=COSIM, capture_output=True,
                                text=True, timeout=1200)
         finally:
             stop.set()
@@ -284,7 +299,7 @@ def run(seed: int = 42, sets: int = 5, keep: bool = True,
     if verbose:
         print(r.stdout[-2000:])
     if "COSIM DONE" not in r.stdout:
-        return False, ["vvp failed:\n" + r.stdout[-3000:] + r.stderr[-1000:]]
+        return False, [f"{os.path.basename(sim_argv[0])} failed:\n" + r.stdout[-3000:] + r.stderr[-1000:]]
 
     report: List[str] = []
     ok = True

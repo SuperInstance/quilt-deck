@@ -6,15 +6,17 @@ effects in balanced transactions, conservation is a runtime check of one
 plain invariant, the whole
 deck state travels in one QUF.
 
-Three backends, one semantics — two verified, one experimental:
+Three backends, one semantics — two verified, one divergent:
 - `python`  — soft fabric engine, bit-exact model of the quilt-verilog cell
 - `esp32`   — the deck graph on quilt-esp32's vendored quilt-vm-c (host loopback)
-- `fpga`    — iverilog cosim against rtl/q_serfabric_top.v. **EXPERIMENTAL /
-  UNVERIFIED**: the cosim does not complete locally (measured 2026-08-30,
-  seed 7 sets 3: vvp killed at its own 20-min timeout at 100% CPU, no
-  egress produced). Byte-identity claims rest on the python and esp32
-  lanes only. Tracked in `cosim/corpus/MANIFEST.md` — the honest
-  negative lives there, not here.
+- `fpga`    — Verilator cosim against rtl/q_serfabric_top.v (iverilog+vvp
+  fallback: `DECK_COSIM_ENGINE=iverilog`). **EXPERIMENTAL / DIVERGENT**:
+  the sim now completes (~82s under Verilator, measured 2026-09-02) and
+  the first differential verdict is in — the RTL egress diverges from
+  the python model at frame #36 and the dumped edge buckets overflow u8;
+  X-sensitivity ruled out. Byte-identity claims rest on the python and
+  esp32 lanes only. Evidence and cause ownership:
+  `cosim/corpus/MANIFEST.md` — the honest negative lives there.
 
 ## Quickstart (python + esp32 commands verified from a clean clone; fpga unverified, see above)
 
