@@ -26,8 +26,19 @@ additionally needs [iverilog](http://iverilog.icarus.com/) (Icarus Verilog);
 it is **optional** — python and esp32 lanes run without it, and the esp32
 lane compiles its vendored C with your system cc, not a cross-toolchain.
 
+**What is actually verified on the esp32 lane (honest scope):** the
+`test_backend_conformance_python_esp32` test builds nothing — it needs
+`esp32/build/deckbridge` to exist (`make -C esp32 deckbridge`); on a fresh
+clone **the test SKIPS silently**, and the suite green means python-lane
+coverage only. Byte-identity has been verified with the toolchains on the
+author machines (gcc/clang, Linux + WSL); cc is not part of the treaty —
+if your compiler produces a divergent archive, that is a bug report, not
+a broken promise, and `tests/test_day.py` will name the diverging hash.
+A `deck console` smoke test (server boots, serves index.html + app.js)
+lands with this note.
+
 ```sh
-python3 -m pytest tests/ -q                 # 31 tests, ~3s — everything green
+python3 -m pytest tests/ -q                 # ~32 tests, ~6s — everything green (esp32 test skips if esp32/build/deckbridge not built: `make -C esp32 deckbridge`)
 python3 -m deck day --seed 7 --sets 3 \
     --export day.json --quf day.quf         # simulate a fishing day
 python3 -m deck books day.json              # the balance ledger of the day
