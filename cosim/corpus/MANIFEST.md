@@ -85,6 +85,19 @@ needs TB instrumentation — pipe/acc are transport counters, NOT in the
 current *.dump state format — so it is a TB change in
 quilt-verilog's lane, not a harness patch here.
 
+### Substrate-ladder connection (IDEATOR nudge, 2026-09-03)
+
+quilt-verilog's spike 225-E1 (Python + C99, 10/10 exact after a
+pulse-queue geometry fix) is a working template for exactly the
+"third oracle" this file says is missing. Audit-trail methodology:
+spikes/225-e1-interference-tick/SUBSTRATE-LADDER.md in quilt-verilog
+(full-vector comparison, characterize-before-reading-the-port,
+fix-the-port-not-the-reference, document-the-divergence-anyway).
+Booked there: an E1 Verilog port as a deck cosim engine — triple
+agreement would upgrade "trust python" from two-implementation
+agreement to a triangulated reference. Unchanged: the G3 tie-breaker
+thread above stays the primary frame-#36 plan.
+
 _Caveat kept honest: iverilog never produced comparable output (the
 vvp hang), so "divergent" means divergent-from-python under Verilator,
 not divergent-from-iverilog. If iverilog ever finishes, compare its
