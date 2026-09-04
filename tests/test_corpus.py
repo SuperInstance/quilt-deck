@@ -1,7 +1,10 @@
 """Corpus fidelity: the committed seed-treaty QUFs regenerate byte-identically.
 
 The treaty files in cosim/corpus/ (seed 7/11/23, sets=3) are the drift
-contract between this repo and quilt-verilog. Until now they were only
+contract between this repo and quilt-verilog. Seed set is the FULL fixed
+corpus — a regression pin, not adversarial selection and not exhaustive
+(seed-selection rule + append-only rotation policy:
+cosim/corpus/MANIFEST.md). Until now the files were only
 re-verified by hand (sha256sum, 2026-08-30). This test runs the actual
 treaty command -- `python3 -m deck day --seed N --sets 3 --quf ...` --
 for each seed and cmps against the committed file, on the python backend

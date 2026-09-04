@@ -19,6 +19,19 @@ other's byte-identity check.
 
 ## Entries (whole files — `sha256sum`, verified 2026-08-30)
 
+**Seed-selection rule (TEACHER nudge 2026-09-04, provenance made
+explicit):** seed 7 is the canonical example seed of this repo (README
+quickstart, cosim probe, conformance test); seeds 11 and 23 were added
+at treaty creation (b173955) as two additional fixed draws to widen
+coverage beyond the canonical day. So the set is (c) the FULL fixed
+corpus — but it is a regression pin, NOT an adversarially chosen probe
+set and NOT exhaustive over seed space. Strength of claim: deterministic
+smoke + drift tripwire on three known-good days. Rotation policy:
+**append-only** — new seeds may be added (with whole-file hashes and a
+note on why), existing seeds are never silently swapped or re-baselined
+(per the escalation rule below); if a seed's file ever regenerates
+differently, the seed is frozen and root-caused, not replaced.
+
 | seed | sets | backend | file bytes | file sha256 (first 16) | payload (CLI line) |
 |------|------|---------|-----------|------------------------|--------------------|
 | 7    | 3    | python  | 4032 | 3754df4af92665e2 | 1888 B 3e9366ab3d99cbe1 |
