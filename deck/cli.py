@@ -3,7 +3,9 @@
   python3 -m deck new [--out deck.quf]        commission a cold graph QUF
   python3 -m deck day [--seed 42] [--sets 5] [--backend python|esp32|fpga]
                       [--export day.json] [--quf day.quf] [--summary]
-  python3 -m deck books DAY.json              the balance ledger of the day
+  python3 -m deck books DAY.json|DAY.quf     the balance ledger of the day
+                                          (a QUF archive is read back from
+                                          its app.deck section)
   python3 -m deck verify DAY.quf              structural + conservation check
   python3 -m deck warm DAY.quf --ops more.json [--out day2.quf]
   python3 -m deck latest               create symlink to latest day export
@@ -72,10 +74,24 @@ def cmd_day(args):
     return 0
 
 
+def _books_from_path(path: str) -> dict:
+    """Books from a day export (json) or a QUF archive (app.deck section).
+
+    The QUF is the single source of truth -- the whole deck state travels in
+    one QUF -- so the operator can read the books straight from the archive
+    without keeping the day export around."""
+    with open(path, "rb") as fh:
+        data = fh.read()
+    if path.endswith(".json"):
+        return json.loads(data)["books"]
+    doc, app = qufio.split_archive(data)
+    if "conservation" not in app:
+        raise SystemExit(f"{path}: no app.deck books in container")
+    return app
+
+
 def cmd_books(args):
-    with open(args.DAY) as fh:
-        export = json.load(fh)
-    b = export["books"]
+    b = _books_from_path(args.DAY)
     print("== F/V EILEEN — the books ==")
     c = b["conservation"]
     print(f"landed {c['landed_total']} = totes {c['totes_total']} + hold "
