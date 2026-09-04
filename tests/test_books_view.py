@@ -72,3 +72,54 @@ def test_books_view_from_quf_archive():
     assert r_quf.returncode == 0, r_quf.stderr
     assert r_quf.stdout == r_json.stdout, "QUF and json books views differ"
     assert "BALANCED" in r_quf.stdout and "refusals" in r_quf.stdout
+
+
+def test_books_view_refuses_structurally_dirty_quf():
+    """DEVIL nudge 2026-09-04: a structurally broken archive is REFUSED
+    loudly, never rendered as a partial/wrong books view.
+
+    Honest scope: qufio.verify is a structural parse (magic, section
+    table, lengths) -- the QUF format has NO content checksum. A flipped
+    byte inside a payload that still parses renders as-is; that residual
+    is the documented trust boundary in README, and fixing it means a
+    checksum section in the QUF spec (treaty-level change), not a patch
+    here. This test pins both sides of that line."""
+    import subprocess
+    import sys
+    import tempfile
+    import os
+    ROOT = str(Path(__file__).resolve().parents[1])
+    quf = os.path.join(tempfile.mkdtemp(), "day.quf")
+    subprocess.run([sys.executable, "-m", "deck", "day", "--seed", "7",
+                    "--sets", "3", "--quf", quf],
+                   cwd=ROOT, check=True, capture_output=True)
+    data = open(quf, "rb").read()
+    # structural break: truncated tail (section table/lengths no longer add up)
+    p = quf + ".truncated"
+    with open(p, "wb") as fh:
+        fh.write(data[:-100])
+    r = subprocess.run([sys.executable, "-m", "deck", "books", p],
+                       cwd=ROOT, capture_output=True, text=True)
+    assert r.returncode != 0, "truncated archive rendered as books!"
+    assert "not a clean QUF" in (r.stdout + r.stderr), r.stdout + r.stderr
+    # structural break: magic corrupted
+    p2 = quf + ".badmagic"
+    with open(p2, "wb") as fh:
+        fh.write(b"XXXX" + data[4:])
+    r2 = subprocess.run([sys.executable, "-m", "deck", "books", p2],
+                        cwd=ROOT, capture_output=True, text=True)
+    assert r2.returncode != 0, "bad-magic archive rendered as books!"
+    # documented residual: a payload byte-flip that still parses DOES render
+    # (no content checksum). Pinned here so the boundary is visible, with a
+    # harmless target: flip a padding byte only if one exists, else the last
+    # body byte of the app.deck JSON section's tail whitespace is absent, so
+    # flip a byte in the final zero padding region.
+    pad = data.rstrip(b"\x00")
+    assert len(pad) < len(data), "expected EOF zero padding in archive QUF"
+    flip = len(pad) + (len(data) - len(pad)) // 2
+    p3 = quf + ".padflip"
+    with open(p3, "wb") as fh:
+        fh.write(data[:flip] + bytes([data[flip] ^ 0x01]) + data[flip + 1:])
+    r3 = subprocess.run([sys.executable, "-m", "deck", "books", p3],
+                        cwd=ROOT, capture_output=True, text=True)
+    assert r3.returncode == 0, "padding flip should still render (documented)"

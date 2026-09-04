@@ -77,13 +77,20 @@ def cmd_day(args):
 def _books_from_path(path: str) -> dict:
     """Books from a day export (json) or a QUF archive (app.deck section).
 
-    The QUF is the single source of truth -- the whole deck state travels in
-    one QUF -- so the operator can read the books straight from the archive
-    without keeping the day export around."""
+    The QUF is the operator's trusted input, not a verified one: the
+    archive is checked STRUCTURALLY (qufio.verify -- magic, section
+    table, lengths) before it is trusted, but there is NO provenance
+    or content-checksum check here. An archive that still parses is
+    rendered as-is; proving an archive is a treaty artifact is
+    `deck verify` + the corpus hashes (cosim/corpus/MANIFEST.md), a
+    separate act."""
     with open(path, "rb") as fh:
         data = fh.read()
     if path.endswith(".json"):
         return json.loads(data)["books"]
+    if not qufio.verify(data):
+        raise SystemExit(f"{path}: not a clean QUF (structural check "
+                         "failed) -- refusing to render books from it")
     doc, app = qufio.split_archive(data)
     if "conservation" not in app:
         raise SystemExit(f"{path}: no app.deck books in container")

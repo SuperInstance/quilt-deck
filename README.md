@@ -42,6 +42,7 @@ python3 -m pytest tests/ -q                 # ~32 tests, ~6s — everything gree
 python3 -m deck day --seed 7 --sets 3 \
     --export day.json --quf day.quf         # simulate a fishing day
 python3 -m deck books day.json              # the balance ledger of the day
+python3 -m deck books day.quf               # same view, straight from the archive
 python3 -m deck verify day.quf              # structural + conservation check
 python3 -m deck console --port 8717         # web console at http://127.0.0.1:8717
 ```
@@ -57,6 +58,18 @@ What a day produces and where to look:
 - stdout — a summary line (landed / balance), the QUF size + sha256 prefix,
   and every adversarial op REFUSED with its booked reason. Expect ~3
   refusals on seed 7 — those are the conservation guard working.
+
+Trust boundary (DEVIL nudge 2026-09-04, stated so it can't be over-read):
+`deck books day.quf` treats the archive as **operator-supplied trusted
+input, not verified provenance**. It refuses to render a structurally
+broken archive (`qufio.verify`: magic + section table + lengths parse —
+truncation and header corruption fail it), but there is **no content
+checksum in the QUF format**: a flipped byte that still parses renders
+as-is. Nothing in the view proves the archive came from this pipeline. Proving that is a
+separate act: `deck verify` for structure + conservation, and the corpus
+hashes in `cosim/corpus/MANIFEST.md` for treaty artifacts. The day export
+(`day.json`) is written by the same run that wrote the archive, so for
+self-produced days the two views are pinned identical by test.
 
   The invariant the guard enforces, in one sentence: **every pound credited
   by an accepted move sits in exactly one custody cell (a tote or the
