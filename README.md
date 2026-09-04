@@ -38,7 +38,7 @@ A `deck console` smoke test (server boots, serves index.html + app.js)
 lands with this note.
 
 ```sh
-python3 -m pytest tests/ -q                 # ~32 tests, ~6s — everything green (esp32 test skips if esp32/build/deckbridge not built: `make -C esp32 deckbridge`)
+python3 -m pytest tests/ -q                 # 40 tests, ~13s — everything green (esp32 tests skip if esp32/build/deckbridge not built: `make -C esp32 deckbridge`)
 python3 -m deck day --seed 7 --sets 3 \
     --export day.json --quf day.quf         # simulate a fishing day
 python3 -m deck books day.json              # the balance ledger of the day
